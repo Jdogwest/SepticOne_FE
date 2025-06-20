@@ -1,0 +1,41 @@
+@use "mixins" as *;
+
+.requests-list {
+  max-width: 1320px;
+  margin: 0 auto;
+  &__title {
+    font-size: 32px;
+    font-weight: 300;
+    margin-bottom: 10px;
+  }
+  &__items {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  &__item {
+    @include requests-status;
+  }
+  &__item-title {
+    font-size: 24px;
+    font-weight: 300;
+    margin-bottom: 12px;
+  }
+  &__item-details {
+    margin-bottom: 12px;
+  }
+  &__item-detail {
+    margin-bottom: 8px;
+  }
+  &__item-services-title {
+    font-size: 18px;
+    font-weight: 300;
+    margin-bottom: 8px;
+  }
+  &__item-services {
+    margin: 10px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+}

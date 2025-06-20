@@ -1,0 +1,29 @@
+<div class="requests-list">
+  <h1 class="requests-list__title">Список заявок</h1>
+  <div class="requests-list__items">
+    @for (request of sortedRequests; track request) {
+    <div [class]="'requests-list__item requests-list__item--' + request.status">
+      <h2 class="requests-list__item-title">
+        Заявка №{{ request.id }} ({{ statusMap[request.status] }})
+      </h2>
+      <div class="requests-list__item-details">
+        <p class="requests-list__item-detail">
+          Дата: {{ request.planed_start_date }}
+        </p>
+        <p class="requests-list__item-detail">
+          Время: {{ request.planed_start_time }}
+        </p>
+        <p class="requests-list__item-detail">
+          Септик: {{ request.septic.model }}
+        </p>
+        <h3 class="requests-list__item-services-title">Услуги:</h3>
+        <ul class="requests-list__item-services">
+          @for (service of request.services; track service) {
+          <li>{{ service.name }} ({{ service.amount }})</li>
+          }
+        </ul>
+      </div>
+    </div>
+    }
+  </div>
+</div>

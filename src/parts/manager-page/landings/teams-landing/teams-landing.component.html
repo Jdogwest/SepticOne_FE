@@ -1,0 +1,41 @@
+<div class="teams-landing" cdkDropListGroup>
+  <h1 class="teams-landing__title">Бригады</h1>
+  <div class="teams-landing__content">
+    <div class="teams-landing__column">
+      <h2 class="teams-landing__column-title">Свободные работники</h2>
+      <div
+        class="teams-landing__list"
+        cdkDropList
+        [cdkDropListData]="freeWorkers"
+        (cdkDropListDropped)="drop($event, null)"
+      >
+        @for (worker of freeWorkers; track worker) {
+        <div class="teams-landing__item" cdkDrag>
+          {{ worker.name }} {{ worker.surname }} {{ worker.patronymic }}
+        </div>
+        }
+      </div>
+    </div>
+
+    @for (brigade of brigades; track brigade) {
+    <div class="teams-landing__row">
+      <div class="teams-landing__column">
+        <h2 class="teams-landing__column-title">{{ brigade.title }}</h2>
+        <div
+          class="teams-landing__list-column"
+          cdkDropList
+          [cdkDropListData]="brigade.workmen"
+          (cdkDropListDropped)="drop($event, brigade.brigadier_id)"
+        >
+          @for (worker of brigade.workmen; track worker) {
+          <div class="teams-landing__item" cdkDrag>
+            {{ worker.name }} {{ worker.surname }} {{ worker.patronymic }}
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    }
+  </div>
+</div>

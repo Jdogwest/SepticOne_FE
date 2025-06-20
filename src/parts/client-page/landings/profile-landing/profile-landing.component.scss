@@ -1,0 +1,20 @@
+.profile-landing {
+  &__container {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 50px 30px 80px;
+  }
+
+  &__title {
+    font-size: 32px;
+    font-weight: 300;
+    margin-bottom: 24px;
+  }
+}
+@media screen and (max-width: 1150px) {
+  .profile-landing {
+    &__container {
+      padding: 100px 30px 80px;
+    }
+  }
+}

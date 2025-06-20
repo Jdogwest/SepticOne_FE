@@ -1,0 +1,97 @@
+<div class="profile-address">
+  <h2 class="profile-address__title">Информация о септике</h2>
+  <div class="profile-address__form-wrapper">
+    <form
+      class="profile-address__form"
+      method="POST"
+      [formGroup]="addressForm"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="profile-address__form-group">
+        <label class="profile-address__form-label" for="city">Город</label>
+        <input
+          class="profile-address__form-input"
+          type="text"
+          id="city"
+          name="city"
+          [formControl]="addressForm.controls.city"
+          placeholder="Тут город пользователя"
+        />
+      </div>
+      <div class="profile-address__form-group">
+        <label class="profile-address__form-label" for="street">Улица</label>
+        <input
+          class="profile-address__form-input"
+          type="text"
+          id="street"
+          name="street"
+          [formControl]="addressForm.controls.street"
+          placeholder="Тут улица пользователя"
+        />
+      </div>
+      <div class="profile-address__form-group">
+        <label class="profile-address__form-label" for="house">Дом</label>
+        <input
+          class="profile-address__form-input"
+          type="text"
+          id="house"
+          name="house"
+          [formControl]="addressForm.controls.house"
+          placeholder="Тут дом пользователя"
+        />
+      </div>
+      <div class="profile-address__form-group">
+        <label class="profile-address__form-label" for="septicModel"
+          >Модель септика</label
+        >
+        <input
+          class="profile-address__form-input"
+          type="text"
+          id="septicModel"
+          name="septicModel"
+          [formControl]="addressForm.controls.septicModel"
+          placeholder="Тут модель септика"
+        />
+      </div>
+      <div class="profile-address__form-group">
+        <label class="profile-address__form-label" for="septicModel"
+          >Объем септика в м³</label
+        >
+        <input
+          class="profile-address__form-input"
+          type="number"
+          id="septicVolume"
+          name="septicVolume"
+          [formControl]="addressForm.controls.septicVolume"
+          placeholder="Тут объем септика"
+        />
+      </div>
+      <div class="profile-address__form-group-buttons">
+        @if (isEdit()) {
+        <button
+          type="submit"
+          class="profile-address__form-btn profile-address__form-btn--save"
+          [disabled]="!addressForm.valid"
+        >
+          Сохранить
+        </button>
+        <button
+          class="profile-address__form-btn profile-address__form-btn--cancel"
+          (click)="disableEdit()"
+          type="button"
+        >
+          Отменить
+        </button>
+        } @else {
+        <button
+          type="button"
+          class="profile-address__form-btn profile-address__form-btn--edit"
+          (click)="enableEdit()"
+        >
+          Редактировать информацию
+        </button>
+        }
+      </div>
+    </form>
+  </div>
+</div>

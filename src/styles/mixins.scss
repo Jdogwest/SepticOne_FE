@@ -1,0 +1,88 @@
+@use "variables" as *;
+
+@mixin input {
+  padding: 15px;
+  font-size: 16px;
+  color: #000;
+  border: 1px solid $border-color;
+  border-radius: 2px;
+  width: 100%;
+  background-color: #fff;
+  resize: none;
+  &::placeholder {
+    color: $placeholder-color;
+  }
+
+  &:disabled {
+    border-color: $input-disabled-color;
+    color: $placeholder-disabled-color;
+    cursor: auto;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+  &[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--primary-color);
+    cursor: pointer;
+    margin-right: 6px;
+    box-shadow: none;
+  }
+}
+
+@mixin button {
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: 0.3s;
+  background-color: $primary-color;
+  color: white;
+  width: fit-content;
+  &--save,
+  &--edit,
+  &--add {
+    background-color: $primary-color;
+    color: #fff;
+  }
+  &--cancel {
+    background-color: $color-cancel;
+    color: black;
+  }
+  &--delete {
+    background-color: $color-error;
+    color: white;
+  }
+  &:hover {
+    transition: 0.3s;
+    opacity: 0.7;
+  }
+}
+
+@mixin requests-status {
+  padding: 16px;
+  border: 1px solid #eee;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  &--new {
+    border: 1px solid #a4d4ff;
+    background-color: #f0f8ff;
+  }
+  &--in_work {
+    border: 1px solid #ffef5e;
+    background-color: #fffacd;
+  }
+  &--complete {
+    border: 1px solid #9ecf78;
+    background-color: #dff0d8;
+  }
+  &--cancelled {
+    border: 1px solid #ffa7a7;
+    background-color: #f2dede;
+  }
+}

@@ -1,0 +1,23 @@
+.preview-block {
+  background-image: url("/assets/img/preview.jpg");
+  background-size: cover;
+  &__container {
+    max-width: 1520px;
+    margin: 0 auto;
+    padding: 50px 30px 600px;
+  }
+
+  &__title {
+    font-size: 70px;
+    font-weight: 400;
+    line-height: 1.2;
+    margin: 0;
+  }
+}
+@media screen and (max-width: 1150px) {
+  .preview-block {
+    &__container {
+      padding: 100px 30px 600px;
+    }
+  }
+}

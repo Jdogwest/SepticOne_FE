@@ -1,0 +1,117 @@
+<div class="request-edit">
+  <h1 class="request-edit__title">Редактирование заявки №1</h1>
+  <div class="request-edit__content">
+    <div class="request-edit__info-row">
+      <div class="request-edit__info">
+        <h2 class="request-edit__info-title">Данные клиента</h2>
+        <p class="request-edit__info-text">Фамилия: Ежиков</p>
+        <p class="request-edit__info-text">Имя: Константин</p>
+        <p class="request-edit__info-text">Отчество: Не указано</p>
+        <p class="request-edit__info-text">Email: Не указано</p>
+        <p class="request-edit__info-text">Телефон: Не указано</p>
+      </div>
+      <div class="request-edit__info">
+        <h2 class="request-edit__info-title">Адрес клиента</h2>
+        <p class="request-edit__info-text">Город: Не указано</p>
+        <p class="request-edit__info-text">Улица: Не указано</p>
+        <p class="request-edit__info-text">Дом: Не указано</p>
+      </div>
+    </div>
+    <div class="request-edit__info">
+      <h2 class="request-edit__info-title">Услуги</h2>
+      <p class="request-edit__info-text">Тип услуги: ывафыаы</p>
+      <p class="request-edit__info-text">Дата выполнения: 01.01.2025</p>
+      <p class="request-edit__info-text">Комментарий: Лялялля</p>
+    </div>
+    <form class="request-edit__form" [formGroup]="requestForm">
+      <h2 class="request-edit__form-title">Редактирование заявки</h2>
+      <div class="request-edit__form-group">
+        <label for="status" class="request-edit__form-label"
+          >Статус заявки</label
+        >
+        <select
+          name="status"
+          id="status"
+          class="request-edit__form-select"
+          [formControl]="requestForm.controls.status"
+        >
+          <option value="none">Новая</option>
+          <option value="in_progress">В процессе</option>
+          <option value="completed">Завершена</option>
+        </select>
+      </div>
+      <div class="request-edit__form-group">
+        <label class="services__form-label" for="date">Дата выполнения</label>
+        <p-datepicker
+          [formControl]="requestForm.controls.date"
+          [iconDisplay]="'input'"
+          [showIcon]="true"
+          inputId="icondisplay"
+          [disabledDates]="busyDates"
+          placeholder="Не выбрано"
+        ></p-datepicker>
+      </div>
+      <div class="request-edit__form-group">
+        <label for="time" class="request-edit__form-label">Время</label>
+        <select
+          name="time"
+          id="time"
+          class="request-edit__form-select"
+          [formControl]="requestForm.controls.time"
+        >
+          <option value="none">Не выбрано</option>
+          <option value="time1">09:00</option>
+          <option value="time2">10:00</option>
+          <option value="time3">11:00</option>
+        </select>
+      </div>
+      <div class="request-edit__form-group">
+        <label for="brigade" class="request-edit__form-label">Бригада</label>
+        <select
+          [formControl]="requestForm.controls.brigade"
+          name="brigade"
+          id="brigade"
+          class="request-edit__form-select"
+        >
+          <option value="none">Не выбрано</option>
+          <option value="brigade1">Бригада 1</option>
+          <option value="brigade2">Бригада 2</option>
+          <option value="brigade3">Бригада 3</option>
+        </select>
+      </div>
+      <div class="request-edit__form-group">
+        <label for="comment" class="request-edit__form-label"
+          >Комментарий</label
+        >
+        <textarea
+          id="comment"
+          class="request-edit__form-textarea"
+          [formControl]="requestForm.controls.comment"
+        ></textarea>
+      </div>
+      <div class="request-edit__form-group-buttons">
+        <div class="request-edit__form-group-button">
+          <button
+            type="button"
+            class="request-edit__form-button request-edit__form-button--save"
+            (click)="onSave()"
+          >
+            Сохранить
+          </button>
+          <button
+            type="button"
+            class="request-edit__form-button request-edit__form-button--cancel"
+          >
+            Отменить
+          </button>
+        </div>
+        <button
+          type="button"
+          class="request-edit__form-button request-edit__form-button--delete"
+        >
+          Удалить
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

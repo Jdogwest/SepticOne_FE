@@ -1,0 +1,136 @@
+<div class="services">
+  <h2 class="services__title">Услуги</h2>
+  <div class="services__form-wrapper">
+    <form
+      class="services__form"
+      [formGroup]="serviceForm"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="services__form-group">
+        <label class="services__form-label" for="service">Тип услуги</label>
+        <div class="services__form-selected-list">
+          @for (service of selectedService; let i = $index; track i) {
+          <div class="services__form-selected">
+            <p class="services__form-selected-title">
+              {{ service.name }} ({{ service.price | number : "1.2-2" }} рублей)
+            </p>
+            <div class="services__form-selected-controls">
+              <div class="services__form-selected-quantity">
+                <button
+                  class="services__form-btn--decrease"
+                  type="button"
+                  (click)="decreaseQuantity(i)"
+                >
+                  -
+                </button>
+                <p class="services__form-selected-quantity-value">
+                  {{ service.quantity }}
+                </p>
+                <button
+                  class="services__form-btn--increase"
+                  type="button"
+                  (click)="increaseQuantity(i)"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+            <button
+              type="button"
+              class="services__form-btn--remove"
+              (click)="removeService(i)"
+              aria-label="Удалить услугу"
+            >
+              ×
+            </button>
+          </div>
+          }
+        </div>
+        <div class="services__form-add-row">
+          @if (showSelect) {
+          <select
+            class="services__form-input"
+            name="service"
+            id="service"
+            [formControl]="selectedServiceId"
+          >
+            <option class="services__form-option" value="none">
+              Не выбрано
+            </option>
+            @for (service of services; track service.id) {
+            <option class="services__form-option" [value]="service.id">
+              {{ service.name }} ({{ service.price | number : "1.2-2" }} рублей)
+            </option>
+            }
+          </select>
+          <button
+            type="button"
+            class="services__form-btn services__form-btn--add"
+            (click)="addService()"
+            [disabled]="selectedServiceId.value === 'none'"
+          >
+            Добавить
+          </button>
+          } @if (!showSelect) {
+          <button
+            type="button"
+            class="services__form-btn services__form-btn--add"
+            (click)="showAddSelect()"
+          >
+            Добавить еще
+          </button>
+          }
+        </div>
+      </div>
+      <div class="services__form-group">
+        <label class="services__form-label" for="date">Дата выполнения</label>
+        <p-datepicker
+          [formControl]="serviceForm.controls.date"
+          [showIcon]="true"
+          [minDate]="today"
+          [disabledDates]="busyDates"
+          [disabledDays]="[0, 6]"
+          placeholder="Не выбрано"
+        ></p-datepicker>
+      </div>
+      <div class="services__form-group">
+        <label class="services__form-label" for="time">Время выполнения</label>
+        <select
+          class="services__form-input"
+          name="time"
+          id="time"
+          [formControl]="serviceForm.controls.time"
+        >
+          @for (time of times; track time) {
+          <option class="services__form-option" [value]="time.value">
+            {{ time.label }}
+          </option>
+          }
+        </select>
+      </div>
+      <div class="services__form-group">
+        <label class="services__form-label" for="comment">Комментарий</label>
+        <textarea
+          class="services__form-input"
+          name="comment"
+          id="comment"
+          [formControl]="serviceForm.controls.comment"
+        ></textarea>
+      </div>
+      <p class="services__form-total-text">
+        Итоговая сумма:
+        {{ totalCost | number : "1.2-2" }} рублей
+      </p>
+
+      <div class="services__form-group-button">
+        <button
+          type="submit"
+          class="services__form-btn services__form-btn--save"
+          [disabled]="!serviceForm.valid"
+        >
+          Создать заявку
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

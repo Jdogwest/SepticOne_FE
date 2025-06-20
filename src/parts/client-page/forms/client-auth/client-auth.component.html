@@ -1,0 +1,185 @@
+<div class="modal">
+  <div class="modal__container">
+    <button
+      (click)="close.emit()"
+      class="modal__button-close"
+      type="button"
+    ></button>
+    @if (isLogin()) {
+    <div class="login">
+      <div class="auth__container">
+        <div class="auth__header">
+          <h2 class="auth__title">Вход в аккаунт</h2>
+        </div>
+        <div class="auth__content">
+          <form class="auth__form">
+            <div class="auth__form-group">
+              <label class="auth__form-label" for="email">Email</label>
+              <input
+                class="auth__form-input"
+                type="email"
+                id="email"
+                name="email"
+                placeholder="email@example.com"
+                [formControl]="loginForm.controls.email"
+              />
+            </div>
+            <div class="auth__form-group">
+              <label class="auth__form-label" for="password">Пароль</label>
+              <input
+                class="auth__form-input"
+                type="password"
+                id="password"
+                name="password"
+                placeholder="******"
+                [formControl]="loginForm.controls.password"
+              />
+            </div>
+            <div class="auth__form-group">
+              <a href="#" class="auth__link auth__link_forgot"
+                >Забыли пароль?</a
+              >
+            </div>
+            <div class="auth__form-group">
+              <button
+                class="auth__button"
+                (click)="login()"
+                [disabled]="loginForm.invalid"
+                type="button"
+              >
+                Войти
+              </button>
+            </div>
+          </form>
+          <div class="auth__footer">
+            <p class="auth__text">
+              Ещё не зарегистрированы?
+              <button
+                (click)="goToRegister()"
+                class="auth__link auth__link-selector"
+              >
+                Зарегистрироваться
+              </button>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    } @else {
+    <div class="register">
+      <div class="auth__container">
+        <div class="auth__header">
+          <h2 class="auth__title">Регистрация</h2>
+        </div>
+        <div class="auth__content">
+          <form class="auth__form">
+            <div class="auth__form-group">
+              <label class="auth__form-label" for="surname">Фамилия</label>
+              <input
+                class="auth__form-input"
+                type="text"
+                id="surname"
+                name="surname"
+                placeholder="Иванов"
+                [formControl]="registrationForm.controls.surname"
+              />
+            </div>
+            <div class="auth__form-group">
+              <label class="auth__form-label" for="name">Имя</label>
+              <input
+                class="auth__form-input"
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Иван"
+                [formControl]="registrationForm.controls.name"
+              />
+            </div>
+            <div class="auth__form-group">
+              <label class="auth__form-label" for="patronymic">Отчество</label>
+              <input
+                class="auth__form-input"
+                type="text"
+                id="patronymic"
+                name="patronymic"
+                placeholder="Иванович"
+                [formControl]="registrationForm.controls.patronymic"
+              />
+            </div>
+            <div class="auth__form-group">
+              <label class="auth__form-label" for="email">Email</label>
+              <input
+                class="auth__form-input"
+                type="email"
+                id="email"
+                name="email"
+                placeholder="email@example.com"
+                [formControl]="registrationForm.controls.email"
+              />
+            </div>
+            <div class="auth__form-group">
+              <label class="auth__form-label" for="password">Пароль</label>
+              <input
+                class="auth__form-input"
+                type="password"
+                id="password"
+                name="password"
+                placeholder="******"
+                [formControl]="registrationForm.controls.password"
+              />
+            </div>
+            <div class="auth__form-group">
+              <label class="auth__form-label" for="password"
+                >Повторите пароль</label
+              >
+              <input
+                class="auth__form-input"
+                type="password"
+                id="password"
+                name="password"
+                placeholder="******"
+                [formControl]="registrationForm.controls.repeatPassword"
+              />
+            </div>
+            <div class="auth__form-group">
+              <label class="auth__form-label-checkbox">
+                <input
+                  type="checkbox"
+                  [formControl]="registrationForm.controls.acceptedAgreement"
+                  class="auth__form-input"
+                />
+                Я согласен с правилами обработки
+                <a class="auth__form-link" href="#">
+                  персональных данных</a
+                ></label
+              >
+            </div>
+            <div class="auth__form-group">
+              <button
+                class="auth__button"
+                (click)="register()"
+                [disabled]="registrationForm.invalid"
+                type="button"
+              >
+                Зарегистрироваться
+              </button>
+            </div>
+          </form>
+          <div class="auth__footer">
+            <p class="auth__text">
+              Уже есть аккаунт?
+              <button
+                (click)="goToLogin()"
+                href="#"
+                class="auth__link auth__link-selector"
+              >
+                Войти
+              </button>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</div>

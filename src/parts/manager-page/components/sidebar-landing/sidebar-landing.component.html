@@ -1,0 +1,51 @@
+<aside class="sidebar">
+  <h2 class="sidebar__title">SepticOne Admin</h2>
+  <div class="sidebar__user-info">
+    <p class="sidebar__user-name">
+      {{ user?.surname }} {{ user?.name }} {{ user?.patronymic }}
+    </p>
+    <p class="sidebar__user-email">{{ user?.email }}</p>
+    <p class="sidebar__user-role">
+      {{ roleMap[user?.role ?? ""] || "Неизвестная роль" }}
+    </p>
+  </div>
+  <nav class="sidebar__nav">
+    <ul class="sidebar__list">
+      <li class="sidebar__item">
+        <a
+          class="sidebar__link"
+          [routerLink]="'requests'"
+          routerLinkActive="active"
+          >Заявки</a
+        >
+      </li>
+      <li class="sidebar__item">
+        <a
+          class="sidebar__link"
+          [routerLink]="'teams'"
+          routerLinkActive="active"
+          >Бригады</a
+        >
+      </li>
+      <li class="sidebar__item">
+        <a
+          class="sidebar__link"
+          [routerLink]="'users'"
+          routerLinkActive="active"
+          >Пользователи</a
+        >
+      </li>
+      <li class="sidebar__item">
+        <a
+          class="sidebar__link"
+          [routerLink]="'call-requests'"
+          routerLinkActive="active"
+          >Запросы</a
+        >
+      </li>
+    </ul>
+  </nav>
+  <div class="sidebar__logout">
+    <button (click)="logout()" class="sidebar__logout-button">Выйти</button>
+  </div>
+</aside>

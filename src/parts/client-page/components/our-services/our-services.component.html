@@ -1,0 +1,51 @@
+<div class="our-services" id="our-services">
+  <div class="our-services__container">
+    <h2 class="our-services__title">Наши услуги</h2>
+    <div class="our-services__content our-services__content--desktop">
+      <div class="our-services__items">
+        @for(item of oddDescriptions; track item.id){
+        <div class="our-services__item">
+          <h3 class="our-services__item-name">
+            {{ item.id }}. {{ item.title }}
+          </h3>
+          <p class="our-services__item-description">{{ item.description }}</p>
+          <p class="our-services__item-time">
+            Время выполнения: {{ item.time }}
+          </p>
+        </div>
+        }
+      </div>
+      <hr class="our-services__item-line" />
+      <div class="our-services__items our-services__items--right">
+        @for(item of evenDescriptions; track item.id){
+        <div class="our-services__item">
+          <h3 class="our-services__item-name">
+            {{ item.id }}. {{ item.title }}
+          </h3>
+          <p class="our-services__item-description">{{ item.description }}</p>
+          <p class="our-services__item-time">
+            Время выполнения: {{ item.time }}
+          </p>
+        </div>
+        }
+      </div>
+    </div>
+
+    <div class="our-services__content our-services__content--mobile">
+      <div class="our-services__items">
+        @for(item of allDescriptions; track item.id){
+        <div class="our-services__item">
+          <h3 class="our-services__item-name">
+            {{ item.id }}. {{ item.title }}
+          </h3>
+          <p class="our-services__item-description">{{ item.description }}</p>
+          <p class="our-services__item-time">
+            Время выполнения: {{ item.time }}
+          </p>
+        </div>
+        <hr class="our-services__item-line" />
+        }
+      </div>
+    </div>
+  </div>
+</div>

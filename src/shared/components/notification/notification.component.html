@@ -1,0 +1,7 @@
+<div class="notification">
+  @for (message of notificationService.messages()(); track message.text) {
+  <div class="notification__container" [ngClass]="message.type">
+      {{ message.text }}
+  </div>
+  }
+</div>

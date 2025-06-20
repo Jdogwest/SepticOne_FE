@@ -1,0 +1,124 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+.services {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  padding: 30px;
+  margin-bottom: 30px;
+  &__title {
+    font-size: 24px;
+    font-weight: 300;
+    margin-bottom: 16px;
+  }
+
+  &__form {
+    &-total-text {
+      margin-bottom: 10px;
+    }
+    &-add-row {
+      display: flex;
+      gap: 10px;
+      flex-direction: column;
+    }
+    &-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    &-select {
+      border-radius: 2px;
+      padding: 15px;
+      font-size: 16px;
+      background: transparent;
+      border: 1px solid $border-color;
+      cursor: pointer;
+    }
+    &-selected {
+      display: grid;
+      grid-template-columns: 10fr 1fr 1fr;
+      gap: 30px;
+      border-top: 1px solid $border-color;
+      padding: 10px 0;
+      align-items: center;
+      &-title {
+        font-size: 18px;
+      }
+      &-controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      &-quantity {
+        background: #d1d1d1;
+        display: flex;
+        align-items: center;
+        &-value {
+          padding: 10px;
+        }
+      }
+    }
+    &-option {
+      appearance: none;
+      padding: 15px;
+      width: 100%;
+    }
+    &-input {
+      @include input();
+    }
+    &-link {
+      color: black;
+    }
+    &-btn {
+      @include button();
+      &--decrease,
+      &--increase {
+        background: transparent;
+        border: none;
+        padding: 8px 15px;
+        font-size: 20px;
+        transition: 0.3s;
+        cursor: pointer;
+        &:hover {
+          background: #b4b4b4;
+          transition: 0.3s;
+        }
+      }
+      &--remove {
+        background: transparent;
+        font-size: 24px;
+        border: none;
+        cursor: pointer;
+      }
+    }
+  }
+}
+:host ::ng-deep .p-datepicker {
+  width: 100%;
+}
+
+:host ::ng-deep .p-datepicker-input {
+  padding: 15px !important;
+  font-size: 16px !important;
+  font-family: "Arial", sans-serif !important;
+  color: black !important;
+  border: 1px solid $border-color !important;
+  border-radius: 2px !important;
+}
+:host ::ng-deep .p-datepicker-input::placeholder {
+  color: #000000 !important;
+}
+:host ::ng-deep .p-datepicker-input-icon-container {
+  color: #000000 !important;
+}
+:host ::ng-deep .p-datepicker-day-selected {
+  background-color: var(--primary-color) !important;
+  border-radius: 0 !important;
+}
+
+:host ::ng-deep .p-datepicker-day {
+  border-radius: 0 !important;
+}
+:host ::ng-deep .p-button-text {
+  color: #000000 !important;
+}

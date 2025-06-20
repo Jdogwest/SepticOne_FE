@@ -1,0 +1,4 @@
+<app-header-landing (loginClick)="openAuth()"></app-header-landing>
+<router-outlet></router-outlet>
+<app-footer-landing></app-footer-landing>
+@if (showAuth()) { <app-client-auth (close)="closeAuth()"></app-client-auth> }

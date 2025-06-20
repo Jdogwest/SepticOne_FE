@@ -1,0 +1,69 @@
+@use "mixins" as *;
+
+.requests-landing {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+  &__title {
+    font-size: 34px;
+    font-weight: 300;
+  }
+  &__select {
+    padding: 10px 20px;
+    background: transparent;
+    border: 1px solid black;
+    font-size: 18px;
+  }
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  &__item {
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    // min-height: 350px;
+    &-content {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    &-title {
+      font-size: 24px;
+      font-weight: 300;
+      margin-bottom: 20px;
+    }
+    &-services {
+      &-list {
+        line-height: 1.5;
+        color: var(--text-color);
+        margin-left: 30px;
+      }
+    }
+    &-info {
+      &-title {
+        font-size: 20px;
+        font-weight: 300;
+        margin-bottom: 10px;
+      }
+      &-text {
+        line-height: 1.5;
+        color: var(--text-color);
+      }
+    }
+
+    @include requests-status;
+  }
+  &__item-button {
+    @include button;
+  }
+}

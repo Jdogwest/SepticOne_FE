@@ -1,0 +1,134 @@
+<div class="user-edit">
+  <div class="user-edit__container">
+    <h1 class="user-edit__title">Редактирование пользователя</h1>
+    <div class="user-edit__form-wrapper">
+      <form [formGroup]="userForm" class="user-edit__form">
+        <div class="user-edit__fields-wrapper">
+          <div class="user-edit__section">
+            <div class="user-edit__field">
+              <label for="surname" class="user-edit__label">Фамилия</label>
+              <input
+                id="surname"
+                class="user-edit__input"
+                [formControl]="userForm.controls.surname"
+                placeholder="Не указано"
+              />
+            </div>
+            <div class="user-edit__field">
+              <label for="name" class="user-edit__label">Имя</label>
+              <input
+                id="name"
+                class="user-edit__input"
+                [formControl]="userForm.controls.name"
+                placeholder="Не указано"
+              />
+            </div>
+            <div class="user-edit__field">
+              <label for="patronymic" class="user-edit__label">Отчество</label>
+              <input
+                id="patronymic"
+                class="user-edit__input"
+                [formControl]="userForm.controls.patronymic"
+                placeholder="Не указано"
+              />
+            </div>
+            <div class="user-edit__field">
+              <label for="email" class="user-edit__label">Email</label>
+              <input
+                id="email"
+                class="user-edit__input"
+                [formControl]="userForm.controls.email"
+                placeholder="Не указано"
+              />
+            </div>
+            <div class="user-edit__field">
+              <label for="phone" class="user-edit__label">Телефон</label>
+              <input
+                id="phone"
+                class="user-edit__input"
+                [formControl]="userForm.controls.phone"
+                placeholder="Не указано"
+              />
+            </div>
+            <div class="user-edit__field">
+              <label for="role" class="user-edit__label">Роль</label>
+              <select
+                id="role"
+                class="user-edit__select"
+                [formControl]="userForm.controls.role"
+              >
+                <option value="admin">Администратор</option>
+                <option value="client">Клиент</option>
+                <option value="manager">Менеджер</option>
+                <option value="workman">Рабочий</option>
+                <option value="brigadier">Бригадир</option>
+              </select>
+            </div>
+          </div>
+          <div class="user-edit__section">
+            <div class="user-edit__section">
+              <div class="user-edit__field">
+                <label for="city" class="user-edit__label">Город</label>
+                <input
+                  id="city"
+                  class="user-edit__input"
+                  [formControl]="userForm.controls.city"
+                  placeholder="Не указано"
+                />
+              </div>
+              <div class="user-edit__field">
+                <label for="street" class="user-edit__label">Улица</label>
+                <input
+                  id="street"
+                  class="user-edit__input"
+                  [formControl]="userForm.controls.street"
+                  placeholder="Не указано"
+                />
+              </div>
+              <div class="user-edit__field">
+                <label for="house" class="user-edit__label">Дом</label>
+                <input
+                  id="house"
+                  class="user-edit__input"
+                  [formControl]="userForm.controls.house"
+                  placeholder="Не указано"
+                />
+              </div>
+              <div class="user-edit__field">
+                <label for="septicModel" class="user-edit__label"
+                  >Модель септика</label
+                >
+                <input
+                  id="septicModel"
+                  class="user-edit__input"
+                  [formControl]="userForm.controls.septicModel"
+                  placeholder="Не указано"
+                />
+              </div>
+              <div class="user-edit__field">
+                <label for="septicVolume" class="user-edit__label"
+                  >Объем септика</label
+                >
+                <input
+                  type="number"
+                  id="septicVolume"
+                  class="user-edit__input"
+                  [formControl]="userForm.controls.septicVolume"
+                  placeholder="Не указано"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button
+          class="user-edit__button user-edit__button--save"
+          type="button"
+          (click)="onSave()"
+        >
+          Сохранить
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

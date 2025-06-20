@@ -1,0 +1,66 @@
+<div class="contact-form">
+  <div class="contact-form__container">
+    <div class="contact-form__left">
+      <h2 class="contact-form__title">
+        Если вас заинтересовали услуги нашей компании, просто заполните
+        приведенную форму
+      </h2>
+      <div class="contact-form__description">
+        <p class="contact-form__text">
+          В ближайшее время мы свяжемся с вами по телефону и обсудим ваш проект
+          и стоящие задачи
+        </p>
+        <p class="contact-form__text">
+          Выезд на объект: наш специалист посетит вас для оценки, составления
+          сметы, далее - заключение договора
+        </p>
+        <p class="contact-form__text">
+          Все готово к работе. Персонал и необходимая техника направляется на
+          объект для оказания услуг в обусловненное время
+        </p>
+      </div>
+    </div>
+    <div class="contact-form__right">
+      <form class="contact-form__form" [formGroup]="contactForm">
+        <div class="contact-form__field">
+          <input
+            [formControl]="contactForm.controls.fio"
+            class="contact-form__input"
+            type="text"
+            placeholder="Ваше ФИО"
+          />
+        </div>
+        <div class="contact-form__field">
+          <input
+            [formControl]="contactForm.controls.phone_number"
+            class="contact-form__input"
+            type="text"
+            placeholder="Ваш номер телефона для связи"
+          />
+        </div>
+        <div class="contact-form__field">
+          <textarea
+            [formControl]="contactForm.controls.comment"
+            class="contact-form__textarea"
+            placeholder="Описание (по желанию)"
+          ></textarea>
+        </div>
+        <div class="contact-form__field">
+          <label class="contact-form__checkbox-label">
+            <input class="contact-form__checkbox" type="checkbox" />
+            Я согласен с правилами обработки персональных данных
+          </label>
+        </div>
+        <div class="contact-form__field">
+          <button
+            (click)="onSubmit()"
+            class="contact-form__submit"
+            type="button"
+          >
+            Отправить
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

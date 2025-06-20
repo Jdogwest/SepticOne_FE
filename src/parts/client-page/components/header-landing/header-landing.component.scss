@@ -1,0 +1,144 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+.header {
+  padding: 15px 30px;
+  &__container {
+    max-width: 1520px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__logo {
+    display: flex;
+    gap: 10px;
+    text-decoration: none;
+    color: black;
+    &-title {
+      font-size: 16px;
+    }
+  }
+  &__hamburger-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    position: relative;
+    display: none;
+    & > span {
+      display: block;
+      width: 30px;
+      height: 3px;
+      background-color: black;
+      position: relative;
+      transition: 0.3s ease;
+      &:before,
+      &:after {
+        content: "";
+        width: 30px;
+        height: 3px;
+        background-color: black;
+        position: absolute;
+        transition: 0.3s ease;
+        left: 0;
+      }
+      &:before {
+        top: -8px;
+      }
+      &:after {
+        top: 8px;
+      }
+    }
+  }
+  &__item {
+    display: flex;
+    align-items: center;
+    &:last-child {
+      display: flex;
+      gap: 20px;
+    }
+  }
+  &__list {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    &-link {
+      text-decoration: none;
+      color: black;
+      transition: 0.3s;
+      &:hover {
+        transition: 0.3s;
+        opacity: 0.5;
+      }
+    }
+    &-button {
+      font-size: 18px;
+      border: none;
+      background: transparent;
+      transition: 0.3s;
+      &:hover {
+        transition: 0.3s;
+        opacity: 0.5;
+      }
+    }
+  }
+  &__contacts {
+    display: flex;
+    gap: 10px;
+    &-block {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    &-number {
+      font-weight: bold;
+    }
+    &-order {
+      text-align: center;
+      font-size: 14px;
+      color: #5b4a4a;
+    }
+  }
+  &__button {
+    @include button();
+  }
+}
+@media screen and (max-width: 1150px) {
+  .header {
+    &__container {
+      flex-direction: column;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.5);
+    }
+    &__hamburger-btn {
+      display: block;
+    }
+    &__item:first-child {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 15px 30px;
+    }
+    &__item,
+    &__item:last-child {
+      display: none;
+    }
+    &__item--open,
+    &__item--open:last-child {
+      display: block;
+      margin-bottom: 20px;
+    }
+    &__list {
+      display: flex;
+      gap: 20px;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+}

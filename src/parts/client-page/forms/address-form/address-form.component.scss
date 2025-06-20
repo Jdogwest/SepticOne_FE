@@ -1,0 +1,49 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+.profile-address {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  padding: 30px;
+  margin-bottom: 30px;
+  &__title {
+    font-size: 24px;
+    font-weight: 300;
+    margin-bottom: 16px;
+  }
+
+  &__form {
+    &-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+      &-buttons {
+        display: flex;
+        gap: 10px;
+      }
+    }
+    &-input {
+      @include input();
+    }
+    &-link {
+      color: black;
+    }
+    &-btn {
+      font-size: 18px;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      &--save,
+      &--edit {
+        background-color: var(--primary-color);
+        color: #fff;
+      }
+      &--cancel {
+        background-color: #ccc;
+        // &:hover {
+        //   background-color: darken(#ccc, 5%);
+        // }
+      }
+    }
+  }
+}

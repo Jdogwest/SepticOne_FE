@@ -1,0 +1,33 @@
+<div class="examples" id="examples">
+  <div class="examples__container">
+    <h2 class="examples__title">Примеры работ</h2>
+    <div class="examples__list">
+      <div class="examples__item" *ngFor="let item of works">
+        <div class="examples__image-wrapper">
+          <img
+            class="examples__image"
+            [src]="'assets/img/works/' + item.image"
+            alt="{{ item.title }}"
+          />
+        </div>
+        <div class="examples__content">
+          <h3 class="examples__item-title">{{ item.title }}</h3>
+          <div class="examples__details">
+            <p class="examples__detail">
+              Проблема:
+              <span class="examples__detail-value">{{ item.problem }}</span>
+            </p>
+            <p class="examples__detail">
+              Решение:
+              <span class="examples__detail-value">{{ item.solution }}</span>
+            </p>
+            <p class="examples__detail">
+              Результат:
+              <span class="examples__detail-value">{{ item.result }}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

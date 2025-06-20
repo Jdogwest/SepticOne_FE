@@ -1,0 +1,39 @@
+.users {
+  &__header {
+    margin-bottom: 30px;
+  }
+
+  &__title {
+    font-size: 34px;
+    font-weight: 300;
+  }
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+      padding: 12px 15px;
+      border: 1px solid #eee;
+      text-align: start;
+      font-size: 18px;
+      font-weight: 300;
+
+      &:first-child {
+        width: 50px;
+      }
+    }
+  }
+  &__edit {
+    &-link {
+      text-decoration: none;
+      color: var(--primary-color);
+      transition: 0.3s;
+      &:hover {
+        // text-decoration: underline;
+        opacity: 0.7;
+        transition: 0.3s;
+      }
+    }
+  }
+}

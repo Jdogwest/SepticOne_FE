@@ -1,0 +1,46 @@
+<div class="users">
+  <div class="users__header">
+    <h1 class="users__title">Все пользователи</h1>
+  </div>
+
+  <div class="users__table-wrapper">
+    <table class="users__table">
+      <thead class="users__table-head">
+        <tr class="users__table-row">
+          <th class="users__table-header">ID</th>
+          <th class="users__table-header">ФИО</th>
+          <th class="users__table-header">Email</th>
+          <th class="users__table-header">Роль</th>
+          <th class="users__table-header"></th>
+        </tr>
+      </thead>
+      <tbody class="users__table-body">
+        @for (user of users; track user.id) {
+        <tr class="users__table-row">
+          <td class="users__table-cell">{{ user.id }}</td>
+          <td class="users__table-cell">
+            {{ user.surname }} {{ user.name }} {{ user.patronymic }}
+          </td>
+          <td class="users__table-cell">{{ user.email }}</td>
+          <td class="users__table-cell">
+            {{
+              user.role === "admin"
+                ? "Администратор"
+                : user.role === "manager"
+                ? "Менеджер"
+                : "Клиент"
+            }}
+          </td>
+          <td class="users__table-cell">
+            <a
+              class="users__edit-link"
+              [routerLink]="'/admin/user-edit/' + user.id"
+              >Редактировать</a
+            >
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

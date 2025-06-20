@@ -1,0 +1,69 @@
+<div class="requests-landing">
+  <div class="requests-landing__header">
+    <h1 class="requests-landing__title">Заявки</h1>
+    <form [formGroup]="form">
+      <select class="requests-landing__select" formControlName="status">
+        <option value="all">Все</option>
+        <option value="new">Новые</option>
+        <option value="in_work">В работе</option>
+        <option value="completed">Завершенные</option>
+        <option value="cancelled">Отменённые</option>
+      </select>
+    </form>
+  </div>
+  <div class="requests-landing__content">
+    <div class="requests-landing__list">
+      @for (request of sortedRequests; track request) {
+      <div
+        [class]="
+          'requests-landing__item requests-landing__item--' + request.status
+        "
+      >
+        <h2 class="requests-landing__item-title">
+          Заявка №{{ request.id }} ({{ statusMap[request.status] }})
+        </h2>
+        <div class="requests-landing__item-content">
+          <div class="requests-landing__item-info">
+            <h3 class="requests-landing__item-info-title">
+              Данные пользователя
+            </h3>
+            <p class="requests-landing__item-info-text">
+              Фамилия: {{ request.client.surname }}
+            </p>
+            <p class="requests-landing__item-info-text">
+              Имя: {{ request.client.name }}
+            </p>
+            <p class="requests-landing__item-info-text">
+              Отчество: {{ request.client.patronymic }}
+            </p>
+          </div>
+          <div class="requests-landing__item-info">
+            <h3 class="requests-landing__item-info-title">Услуги</h3>
+            <p class="requests-landing__item-info-text">Тип услуги:</p>
+            <ul class="requests-landing__item-services-list">
+              @for (service of request.services; track service) {
+              <li class="requests-landing__item-services-list-item">
+                {{ service.name }} ({{ service.amount }})
+              </li>
+              }
+            </ul>
+            <p class="requests-landing__item-info-text">
+              Дата выполнения: 01.06.2025
+            </p>
+            <p class="requests-landing__item-info-text">
+              Время выполения: 16:00
+            </p>
+          </div>
+        </div>
+        <div>
+          <a
+            [routerLink]="'/admin/request-edit/1'"
+            class="requests-landing__item-button"
+            >Подробнее</a
+          >
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<div class="call-requests">
+  <div class="call-requests__container">
+    <h1 class="call-requests__title">Запросы на звонок</h1>
+    <div class="call-requests__table-wrapper">
+      <table class="call-requests__table">
+        <thead class="call-requests__thead">
+          <tr class="call-requests__row call-requests__row--header">
+            <th class="call-requests__cell">ФИО</th>
+            <th class="call-requests__cell">Телефон</th>
+            <th class="call-requests__cell">Комментарий</th>
+            <th class="call-requests__cell">Статус</th>
+          </tr>
+        </thead>
+        <tbody class="call-requests__tbody">
+          @for (request of callRequests; track request.id) {
+          <tr class="call-requests__row">
+            <td class="call-requests__cell">{{ request.fio }}</td>
+            <td class="call-requests__cell">{{ request.phone_number }}</td>
+            <td class="call-requests__cell">{{ request.comment }}</td>
+            <td class="call-requests__cell">{{ request.status }}</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

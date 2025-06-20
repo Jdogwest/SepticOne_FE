@@ -1,0 +1,59 @@
+.sidebar {
+  width: 400px;
+  background: rgb(44, 44, 75);
+  color: white;
+  padding: 20px 0;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.3);
+  position: relative;
+  height: 100%;
+  &__user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 20px;
+    margin-bottom: 30px;
+  }
+  &__title {
+    text-align: center;
+    font-weight: 300;
+    margin-bottom: 30px;
+  }
+  &__list {
+    list-style: none;
+  }
+  &__item {
+    background-color: white;
+    border-top: 1px solid var(--border-color);
+    &:first-child {
+      border-top: none;
+    }
+  }
+  &__link {
+    width: 100%;
+    display: inline-block;
+    padding: 20px;
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+    transition: 0.3s;
+    &:hover {
+      transition: 0.3s;
+      background-color: #ccc;
+    }
+  }
+  &__logout {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    &-button {
+      color: white;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-size: 20px;
+    }
+  }
+}

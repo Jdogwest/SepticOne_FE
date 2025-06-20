@@ -1,0 +1,49 @@
+/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
+/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "outDir": "./dist/out-tsc",
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "bundler",
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "ES2022",
+    "baseUrl": "./",
+    "paths": {
+      "@/main-page/*": ["src/parts/client-page/*"],
+      "@/main-page/components/*": ["src/parts/client-page/components/*"],
+      "@/main-page/services/*": ["src/parts/client-page/services/*"],
+      "@/main-page/constants/*": ["src/parts/client-page/constants/*"],
+      "@/main-page/forms/*": ["src/parts/client-page/forms/*"],
+      "@/main-page/interfaces/*": ["src/parts/client-page/interfaces/*"],
+      "@/main-page/landings/*": ["src/parts/client-page/landings/*"],
+      "@/manager-page/*": ["src/parts/manager-page/*"],
+      "@/manager-page/components/*": ["src/parts/manager-page/components/*"],
+      "@/manager-page/services/*": ["src/parts/manager-page/services/*"],
+      "@/manager-page/constants/*": ["src/parts/manager-page/constants/*"],
+      "@/manager-page/interfaces/*": ["src/parts/manager-page/interfaces/*"],
+      "@/manager-page/landings/*": ["src/parts/manager-page/landings/*"],
+      "@/shared/*": ["src/shared/*"],
+      "@/shared/components/*": ["src/shared/components/*"],
+      "@/shared/services/*": ["src/shared/services/*"],
+      "@/shared/constants/*": ["src/shared/constants/*"],
+      "@/shared/interfaces/*": ["src/shared/interfaces/*"],
+      "@/guards/*": ["src/core/guards/*"]
+    }
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
+}

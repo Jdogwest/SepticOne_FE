@@ -1,0 +1,30 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+.user-edit {
+  &__title {
+    font-size: 34px;
+    font-weight: 300;
+    margin-bottom: 20px;
+  }
+  &__fields-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 50px;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  &__input,
+  &__select {
+    @include input();
+  }
+
+  &__button {
+    @include button();
+  }
+}
