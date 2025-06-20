@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { API_BE_HOST } from '../../../env';
-import { Service } from '@/shared/interfaces/Service.interface';
+import { Service } from '@/shared/interfaces/service.interface';
 
 @Injectable({
   providedIn: 'root',

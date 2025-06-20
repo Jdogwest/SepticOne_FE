@@ -104,6 +104,8 @@
   color: black !important;
   border: 1px solid $border-color !important;
   border-radius: 2px !important;
+  border-end-end-radius: 0 !important;
+  border-start-end-radius: 0 !important;
 }
 :host ::ng-deep .p-datepicker-input::placeholder {
   color: #000000 !important;
@@ -121,4 +123,12 @@
 }
 :host ::ng-deep .p-button-text {
   color: #000000 !important;
+}
+:host ::ng-deep .p-datepicker-dropdown {
+  background: transparent !important;
+  border: 1px solid $border-color !important;
+  border-left: none !important;
+  border-end-end-radius: 2px !important;
+  border-start-end-radius: 2px !important;
+  color: $placeholder-color;
 }

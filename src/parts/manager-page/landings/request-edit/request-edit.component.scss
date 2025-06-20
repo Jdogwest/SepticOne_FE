@@ -36,6 +36,13 @@
       line-height: 1.5;
       color: var(--text-color);
     }
+    &-list {
+      color: var(--text-color);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 0 30px;
+    }
   }
   &__form {
     &-title {
@@ -113,4 +120,12 @@
 }
 :host ::ng-deep .p-button-text {
   color: #000000 !important;
+}
+:host ::ng-deep .p-datepicker-dropdown {
+  background: transparent !important;
+  border: 1px solid $border-color !important;
+  border-left: none !important;
+  border-end-end-radius: 2px !important;
+  border-start-end-radius: 2px !important;
+  color: $placeholder-color;
 }

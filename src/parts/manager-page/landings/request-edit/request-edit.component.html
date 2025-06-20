@@ -3,28 +3,54 @@
   <div class="request-edit__content">
     <div class="request-edit__info-row">
       <div class="request-edit__info">
-        <h2 class="request-edit__info-title">Данные клиента</h2>
-        <p class="request-edit__info-text">Фамилия: Ежиков</p>
-        <p class="request-edit__info-text">Имя: Константин</p>
-        <p class="request-edit__info-text">Отчество: Не указано</p>
-        <p class="request-edit__info-text">Email: Не указано</p>
-        <p class="request-edit__info-text">Телефон: Не указано</p>
+        <h2 class="request-edit__info-title">Информация о септике</h2>
+        <p class="request-edit__info-text">Город: {{ septic.city }}</p>
+        <p class="request-edit__info-text">Улица: {{ septic.street }}</p>
+        <p class="request-edit__info-text">Дом: {{ septic.house }}</p>
+        <p class="request-edit__info-text">Модель: {{ septic.model }}</p>
+        <p class="request-edit__info-text">Объем: {{ septic.volume }}</p>
       </div>
       <div class="request-edit__info">
-        <h2 class="request-edit__info-title">Адрес клиента</h2>
-        <p class="request-edit__info-text">Город: Не указано</p>
-        <p class="request-edit__info-text">Улица: Не указано</p>
-        <p class="request-edit__info-text">Дом: Не указано</p>
+        <h2 class="request-edit__info-title">Данные клиента</h2>
+        <p class="request-edit__info-text">Фамилия: {{ client.surname }}</p>
+        <p class="request-edit__info-text">Имя: {{ client.name }}</p>
+        <p class="request-edit__info-text">Отчество: {{ client.patronymic }}</p>
+        <p class="request-edit__info-text">
+          Телефон: {{ client.phone_number }}
+        </p>
       </div>
     </div>
     <div class="request-edit__info">
       <h2 class="request-edit__info-title">Услуги</h2>
-      <p class="request-edit__info-text">Тип услуги: ывафыаы</p>
-      <p class="request-edit__info-text">Дата выполнения: 01.01.2025</p>
-      <p class="request-edit__info-text">Комментарий: Лялялля</p>
+      <p class="request-edit__info-text">Тип услуг:</p>
+      <ul class="request-edit__info-list">
+        @for (service of services; track service) {
+        <li class="request-edit__info-item">
+          {{ service.name }} ({{ service.amount }})
+        </li>
+        }
+      </ul>
+      <p class="request-edit__info-text">Дата выполнения: {{ plannedDate }}</p>
+      <p class="request-edit__info-text">Комментарий: {{ comment }}</p>
+      <p class="request-edit__info-text">
+        Итоговая стоимость: {{ summary | number : "1.2-2" }} рублей
+      </p>
     </div>
     <form class="request-edit__form" [formGroup]="requestForm">
       <h2 class="request-edit__form-title">Редактирование заявки</h2>
+      <div class="request-edit__form-group">
+        <label for="contractNumber" class="request-edit__form-label"
+          >Номер договора</label
+        >
+        <input
+          type="text"
+          id="contractNumber"
+          class="request-edit__form-input"
+          [formControl]="requestForm.controls.contractNumber"
+          placeholder="Введите номер договора"
+        />
+      </div>
+
       <div class="request-edit__form-group">
         <label for="status" class="request-edit__form-label"
           >Статус заявки</label
@@ -35,9 +61,10 @@
           class="request-edit__form-select"
           [formControl]="requestForm.controls.status"
         >
-          <option value="none">Новая</option>
-          <option value="in_progress">В процессе</option>
+          <option value="new">Новая</option>
+          <option value="in_work">В процессе</option>
           <option value="completed">Завершена</option>
+          <option value="cancelled">Завершена</option>
         </select>
       </div>
       <div class="request-edit__form-group">
@@ -60,9 +87,9 @@
           [formControl]="requestForm.controls.time"
         >
           <option value="none">Не выбрано</option>
-          <option value="time1">09:00</option>
-          <option value="time2">10:00</option>
-          <option value="time3">11:00</option>
+          <option value="09:00">09:00</option>
+          <option value="10:00">10:00</option>
+          <option value="11:00">11:00</option>
         </select>
       </div>
       <div class="request-edit__form-group">
@@ -74,9 +101,11 @@
           class="request-edit__form-select"
         >
           <option value="none">Не выбрано</option>
-          <option value="brigade1">Бригада 1</option>
-          <option value="brigade2">Бригада 2</option>
-          <option value="brigade3">Бригада 3</option>
+          @for (brigade of brigades; track brigade.brigadier_id) {
+          <option [value]="brigade.brigadier_id">
+            {{ brigade.brigadier_surname }} {{ brigade.brigadier_name }}
+          </option>
+          }
         </select>
       </div>
       <div class="request-edit__form-group">

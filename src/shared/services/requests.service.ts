@@ -10,6 +10,8 @@ export class RequestsService {
     addRequest: API_BE_HOST + 'requests/add/',
     getMyRequests: API_BE_HOST + 'requests/my_requests/',
     getAllRequests: API_BE_HOST + 'requests/all/',
+    getById: API_BE_HOST + 'requests/',
+    editByIdRequest: API_BE_HOST + 'requests/edit/',
   };
 
   private readonly httpClient = inject(HttpClient);
@@ -44,5 +46,19 @@ export class RequestsService {
       withCredentials: true,
       params,
     });
+  }
+  getById(id: number) {
+    return this.httpClient.get(`${this.apiUrls.getById}${id}/`, {
+      withCredentials: true,
+    });
+  }
+  editByIdRequest(id: number, requestData: any) {
+    return this.httpClient.post(
+      `${this.apiUrls.editByIdRequest}${id}/`,
+      requestData,
+      {
+        withCredentials: true,
+      }
+    );
   }
 }

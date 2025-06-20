@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ServicesFormData } from '@/shared/interfaces/services-form.interface';
 import { ServiceService } from '@/shared/services/services.service';
-import { Service } from '@/shared/interfaces/Service.interface';
+import { Service } from '@/shared/interfaces/service.interface';
 import { RequestsService } from '@/shared/services/requests.service';
 import { AddRequestPayload } from '@/shared/interfaces/requests.interface';
 import { NotificationService } from '@/shared/services/notification.service';
@@ -178,8 +178,6 @@ export class ServicesFormComponent {
           amount: s.quantity,
         })),
       };
-      console.log(payload);
-
       this.requestsService.addRequest(payload).subscribe({
         next: (res: any) => {
           this.notificationService.success(
