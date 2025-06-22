@@ -1,8 +1,9 @@
-import { Component, inject } from '@angular/core';
-import { UsersService } from '@/shared/services/users.service';
-import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { UserFormData } from '@/manager-page/interfaces/user-form.interface';
+import { AuthService } from '@/shared/services/auth.service';
+import { UsersService } from '@/shared/services/users.service';
+import { Component, inject, signal } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 type FormControlsOf<T> = {
   [K in keyof T]: FormControl<T[K]>;
@@ -15,7 +16,7 @@ type FormControlsOf<T> = {
   styleUrl: './user-edit.component.scss',
 })
 export class UserEditComponent {
-  user: any = null;
+  user = signal<any>(null);
 
   userForm = new FormGroup<FormControlsOf<UserFormData>>({
     surname: new FormControl(''),
@@ -31,18 +32,24 @@ export class UserEditComponent {
     septicVolume: new FormControl(null),
   });
 
-  private usersService = inject(UsersService);
-  private route = inject(ActivatedRoute);
+  private readonly usersService = inject(UsersService);
+  private readonly authService = inject(AuthService);
+  private readonly route = inject(ActivatedRoute);
 
   ngOnInit(): void {
     const userId = this.route.snapshot.params['id'];
     this.loadUserById(userId);
+
+    this.authService.getSessionData().subscribe({
+      next: (data) => {
+        this.user.set(data?.user);
+      },
+    });
   }
 
   loadUserById(id: number): void {
     this.usersService.getUserById(id).subscribe({
       next: (data: any) => {
-        this.user = data;
         this.userForm.patchValue({
           surname: data.surname || '',
           name: data.name || '',

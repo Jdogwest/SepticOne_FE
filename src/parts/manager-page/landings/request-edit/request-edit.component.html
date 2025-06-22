@@ -64,7 +64,7 @@
           <option value="new">Новая</option>
           <option value="in_work">В процессе</option>
           <option value="completed">Завершена</option>
-          <option value="cancelled">Завершена</option>
+          <option value="cancelled">Отменена</option>
         </select>
       </div>
       <div class="request-edit__form-group">
@@ -90,6 +90,8 @@
           <option value="09:00">09:00</option>
           <option value="10:00">10:00</option>
           <option value="11:00">11:00</option>
+          <option value="12:00">12:00</option>
+          <option value="13:00">13:00</option>
         </select>
       </div>
       <div class="request-edit__form-group">
@@ -101,9 +103,10 @@
           class="request-edit__form-select"
         >
           <option value="none">Не выбрано</option>
-          @for (brigade of brigades; track brigade.brigadier_id) {
-          <option [value]="brigade.brigadier_id">
-            {{ brigade.brigadier_surname }} {{ brigade.brigadier_name }}
+          @for (brigade of brigades(); track brigade.id) {
+          <option [value]="brigade.id">
+            {{ brigade.surname }} {{ brigade.name }} ( рабочих:
+            {{ brigade.workmans_count }} )
           </option>
           }
         </select>
@@ -115,7 +118,7 @@
         <textarea
           id="comment"
           class="request-edit__form-textarea"
-          [formControl]="requestForm.controls.comment"
+          [formControl]="requestForm.controls.work_comment"
         ></textarea>
       </div>
       <div class="request-edit__form-group-buttons">
@@ -134,12 +137,12 @@
             Отменить
           </button>
         </div>
-        <button
+        <!-- <button
           type="button"
           class="request-edit__form-button request-edit__form-button--delete"
         >
           Удалить
-        </button>
+        </button> -->
       </div>
     </form>
   </div>

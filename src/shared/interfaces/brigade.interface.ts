@@ -12,8 +12,6 @@ export interface Brigade {
 }
 
 export interface BrigadeUpdatePayload {
-  brigads: {
-    brigadier_id: number;
-    workman_ids: number[];
-  }[];
+  brigadier_id: number;
+  workman_ids: number[];
 }

@@ -1,12 +1,14 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { RequestFormData } from '@/manager-page/interfaces/request-form.interface';
+import { BrigadierResponse } from '@/shared/interfaces/brigadier-response.interface';
+import { BrigadeService } from '@/shared/services/brigade.service';
+import { NotificationService } from '@/shared/services/notification.service';
+import { RequestsService } from '@/shared/services/requests.service';
+import { CommonModule } from '@angular/common';
+import { Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { RequestsService } from '@/shared/services/requests.service';
 import { DatePickerModule } from 'primeng/datepicker';
-import { RequestFormData } from '@/manager-page/interfaces/request-form.interface';
-import { BrigadeService } from '@/shared/services/brigade.service';
-import { CommonModule } from '@angular/common';
-import { NotificationService } from '@/shared/services/notification.service';
 
 type FormControlsOf<T> = {
   [K in keyof T]: FormControl<T[K]>;
@@ -24,8 +26,9 @@ export class RequestEditComponent implements OnInit {
   private readonly requestsService = inject(RequestsService);
   private readonly brigadeService = inject(BrigadeService);
   private readonly notificationService = inject(NotificationService);
+  private readonly destroyRef = inject(DestroyRef);
 
-  brigades: any[] = [];
+  brigades = signal<BrigadierResponse[]>([]);
 
   busyDates: Date[] = [
     new Date('2025-06-03'),
@@ -62,6 +65,7 @@ export class RequestEditComponent implements OnInit {
     time: new FormControl('none'),
     brigade: new FormControl('none'),
     comment: new FormControl(''),
+    work_comment: new FormControl(''),
   });
 
   ngOnInit(): void {
@@ -84,6 +88,7 @@ export class RequestEditComponent implements OnInit {
         time: timeValue,
         brigade: 'none',
         comment: res.comment || '',
+        work_comment: res.work_comment || '',
       });
 
       this.client = {
@@ -110,6 +115,30 @@ export class RequestEditComponent implements OnInit {
       this.comment = res.comment || 'Не указано';
       this.summary = res.summary;
     });
+
+    this.requestForm.controls.date.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (date) => {
+          const day =
+            Number(date?.getDate()) < 10
+              ? '0' + date?.getDate()
+              : date?.getDate();
+          const month =
+            Number(date?.getMonth()) + 1 < 10
+              ? '0' + (Number(date?.getMonth()) + 1)
+              : Number(date?.getMonth()) + 1;
+          const year = date?.getFullYear();
+          const dateStr = `${year}-${month}-${day}`;
+
+          this.requestsService.getBrigadesOnDate(dateStr).subscribe({
+            next: (response: any) => {
+              this.brigades.set(response);
+              console.log(this.brigades());
+            },
+          });
+        },
+      });
   }
 
   onSave() {
@@ -138,6 +167,7 @@ export class RequestEditComponent implements OnInit {
         brigadier_id: Number(formValue.brigade),
         contract_number: formValue.contractNumber,
         comment: formValue.comment,
+        work_comment: formValue.work_comment,
       };
       console.log(requestData);
       this.requestsService.editByIdRequest(id, requestData).subscribe({

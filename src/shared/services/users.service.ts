@@ -1,8 +1,8 @@
+import { UserFormData } from '@/shared/interfaces/user-form.interface';
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { API_BE_HOST } from '../../../env';
-import { UserFormData } from '@/shared/interfaces/user-form.interface';
 import { Observable } from 'rxjs';
+import { API_BE_HOST } from '../../../env';
 
 @Injectable({
   providedIn: 'root',
@@ -37,7 +37,7 @@ export class UsersService {
   }
 
   editUser(userData: UserFormData): Observable<any> {
-    return this.httpClient.post(this.apiUrls.editUser, userData, {
+    return this.httpClient.put(this.apiUrls.editUser, userData, {
       withCredentials: true,
     });
   }

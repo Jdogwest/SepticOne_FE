@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { API_BE_HOST } from '../../../env';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { API_BE_HOST } from '../../../env';
 
 @Injectable({
   providedIn: 'root',
@@ -77,7 +77,6 @@ export class AuthService {
     if (this.sessionData) {
       return new BehaviorSubject(this.sessionData).asObservable();
     }
-
     return this.httpClient
       .get<{ user: any; septic: any }>(this.apiUrls.me, {
         withCredentials: true,
@@ -93,6 +92,11 @@ export class AuthService {
   logout(): Observable<any> {
     return this.httpClient
       .post(this.apiUrls.logout, {}, { withCredentials: true })
-      .pipe(tap(() => this.isLoggedInSubject.next(false)));
+      .pipe(
+        tap(() => {
+          this.isLoggedInSubject.next(false);
+          this.sessionData = null;
+        })
+      );
   }
 }

@@ -1,17 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Brigade, Workman } from '@/shared/interfaces/brigade.interface';
+import { BrigadeService } from '@/shared/services/brigade.service';
 import {
   CdkDragDrop,
   DragDropModule,
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
-import {
-  Brigade,
-  Workman,
-  BrigadeUpdatePayload,
-} from '@/shared/interfaces/brigade.interface';
-import { BrigadeService } from '@/shared/services/brigade.service';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-teams-landing',
@@ -83,17 +80,21 @@ export class TeamsLandingComponent implements OnInit {
   }
 
   syncBrigadesWithServer(): void {
+    console.log(this.brigades);
     const brigadsPayload = this.brigades.map((brigade) => ({
       brigadier_id: brigade.brigadier_id,
       workman_ids: brigade.workmen.map((w) => w.id),
     }));
-
-    this.brigadeService.editBrigade({ brigads: brigadsPayload }).subscribe({
-      next: () => {
-        console.log('Успешно синхронизировано');
-        this.loadFreeWorkers();
-      },
-      error: (err) => console.error('Ошибка при синхронизации', err),
-    });
+    this.brigadeService
+      .editBrigade(brigadsPayload)
+      .pipe(finalize(() => this.loadFreeWorkers()))
+      .subscribe({
+        next: () => {
+          console.log('Успешно синхронизировано');
+        },
+        error: (err) => {
+          throw new Error('Ошибка при синхронизации', err);
+        },
+      });
   }
 }

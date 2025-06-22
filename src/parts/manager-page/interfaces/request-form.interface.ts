@@ -5,4 +5,5 @@ export interface RequestFormData {
   brigade: string | null;
   comment: string | null;
   contractNumber: string | null;
+  work_comment: string | null;
 }

@@ -50,6 +50,7 @@
                 placeholder="Не указано"
               />
             </div>
+            @if (user().role === 'admin'){
             <div class="user-edit__field">
               <label for="role" class="user-edit__label">Роль</label>
               <select
@@ -64,6 +65,7 @@
                 <option value="brigadier">Бригадир</option>
               </select>
             </div>
+            }
           </div>
           <div class="user-edit__section">
             <div class="user-edit__section">

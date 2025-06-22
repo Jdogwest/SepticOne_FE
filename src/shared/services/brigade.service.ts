@@ -1,10 +1,7 @@
+import { BrigadeUpdatePayload } from '@/shared/interfaces/brigade.interface';
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { API_BE_HOST } from '../../../env';
-import {
-  Brigade,
-  BrigadeUpdatePayload,
-} from '@/shared/interfaces/brigade.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -23,8 +20,12 @@ export class BrigadeService {
       withCredentials: true,
     });
   }
-  editBrigade(payload: BrigadeUpdatePayload) {
-    return this.httpClient.post(this.apiUrls.editBrigade, payload, {
+  editBrigade(data: BrigadeUpdatePayload[]) {
+    const payload = {
+      brigads: data,
+    };
+    console.log('payload', payload);
+    return this.httpClient.put(this.apiUrls.editBrigade, payload, {
       withCredentials: true,
     });
   }

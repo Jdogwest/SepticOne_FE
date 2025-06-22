@@ -26,7 +26,7 @@ export class SepticService {
       model: septicData.model,
       volume: septicData.volume,
     };
-    return this.httpClient.post(this.apiUrls.editSeptic, payload, {
+    return this.httpClient.put(this.apiUrls.editSeptic, payload, {
       withCredentials: true,
     });
   }
