@@ -1,1 +1,1 @@
-export const API_BE_HOST = 'http://localhost:8000/';
+export const API_BE_HOST = 'https://api.septic-one.veney.tech';
