@@ -11,6 +11,7 @@ import { AdminLayoutComponent } from '@/manager-page/admin-layout/admin-layout.c
 import { UserEditComponent } from '@/manager-page/landings/user-edit/user-edit.component';
 import { AdminGuard } from '@/guards/admin.guard';
 import { CallRequestsLandingComponent } from '@/manager-page/landings/call-requests-landing/call-requests-landing.component';
+import { CalendarComponent } from '@/manager-page/components/calendar/calendar.component';
 
 export const routes: Routes = [
   {
@@ -59,6 +60,10 @@ export const routes: Routes = [
       {
         path: 'call-requests',
         component: CallRequestsLandingComponent,
+      },
+      {
+        path: 'brigads-calendar',
+        component: CalendarComponent,
       },
     ],
   },

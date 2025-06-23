@@ -1,0 +1,67 @@
+.calendar {
+  &__title {
+    font-size: 34px;
+    font-weight: 300;
+    margin-bottom: 30px;
+  }
+  &__month-title {
+    font-weight: 300;
+    margin-bottom: 10px;
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+    table-layout: fixed;
+  }
+  &__head,
+  &__body {
+    border: 1px solid #ccc;
+  }
+
+  &__weekday,
+  &__day {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+    vertical-align: top;
+    width: calc(100% / 7);
+    overflow-wrap: break-word;
+    height: 100px;
+  }
+
+  &__date {
+    font-weight: 300;
+    padding: 10px;
+    margin-bottom: 4px;
+  }
+
+  &__brigad {
+    font-size: 12px;
+    margin-bottom: 15px;
+    &-title {
+      font-size: 18px;
+      font-weight: 300;
+      margin-bottom: 5px;
+    }
+    &-text {
+      font-size: 18px;
+      text-decoration: none;
+      color: #6d6d6d;
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  &__day {
+    &--weekend,
+    &--empty {
+      background-color: #e0e0e0;
+    }
+    &--busy {
+      background-color: #d6f5d6;
+    }
+  }
+}

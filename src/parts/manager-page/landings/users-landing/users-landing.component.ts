@@ -3,6 +3,7 @@ import { UsersService } from '@/shared/services/users.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '@/shared/services/auth.service';
+import { NotificationService } from '@/shared/services/notification.service';
 
 @Component({
   selector: 'app-users-landing',
@@ -15,10 +16,17 @@ export class UsersLandingComponent implements OnInit {
   users: any[] = [];
   selectedUser: any = null;
   currentRole: string = '';
+  roleToLabel: Record<string, string> = {
+    admin: 'Администратор',
+    manager: 'Менеджер',
+    client: 'Клиент',
+    workman: 'Рабочий',
+    brigadier: 'Бригадир',
+  };
 
-  private usersService = inject(UsersService);
-  
-  private authService = inject(AuthService);
+  private readonly usersService = inject(UsersService);
+  private readonly authService = inject(AuthService);
+  private readonly notificationService = inject(NotificationService);
 
   ngOnInit(): void {
     this.authService.getSessionData().subscribe({
@@ -27,7 +35,9 @@ export class UsersLandingComponent implements OnInit {
         this.loadUsers();
       },
       error: (err: any) => {
-        console.error('Ошибка при получении текущего пользователя', err);
+        this.notificationService.error(
+          `Ошибка при получении текущего пользователя: ${err}`
+        );
       },
     });
   }
@@ -49,12 +59,14 @@ export class UsersLandingComponent implements OnInit {
         if (Array.isArray(data)) {
           this.users = data;
         } else {
-          console.error('Ошибка:', data);
+          this.notificationService.error(`Ошибка: ${data}`);
           this.users = [];
         }
       },
       error: (err) => {
-        console.error('Ошибка при получении пользователей', err);
+        this.notificationService.error(
+          `Ошибка при получении пользователей: ${err}`
+        );
       },
     });
   }

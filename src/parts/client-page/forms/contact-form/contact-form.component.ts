@@ -35,13 +35,11 @@ export class ContactFormComponent {
       };
       this.callRequestsService.addCall(callData).subscribe({
         next: (response: { detail?: string }) => {
-          this.notificationService.success(
-            response?.detail || 'Данные отправлены'
-          );
+          this.notificationService.success('Данные отправлены');
         },
         error: (error: { detail?: string }) => {
           this.notificationService.error(
-            error?.detail || 'Ошибка при отправке данных'
+            `Ошибка при отправке данных: ${error}`
           );
         },
       });

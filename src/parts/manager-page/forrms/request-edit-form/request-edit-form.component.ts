@@ -84,7 +84,14 @@ export class RequestEditFormComponent {
 
           this.requestsService.getBrigadesOnDate(dateStr).subscribe({
             next: (response: any) => {
-              this.brigades.set(response);
+              let brigadesTemp = this.brigades();
+
+              response.forEach((brg: any) => {
+                if (!brigadesTemp.some((b) => b.id === brg.id))
+                  brigadesTemp.push(brg);
+              });
+
+              this.brigades.set(brigadesTemp);
             },
           });
         },
@@ -94,15 +101,14 @@ export class RequestEditFormComponent {
   loadServices() {
     this.serviceService.getAllServices().subscribe({
       next: (res) => (this.services = res),
-      error: () => this.notificationService.error('Ошибка загрузки услуг'),
+      error: (error) =>
+        this.notificationService.error(`Ошибка загрузки услуг: ${error}`),
     });
   }
 
   loadRequest() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     if (!id) return;
-
-    this.brigadeService.getAllBrigades;
 
     this.requestsService.getById(id).subscribe((res: any) => {
       const dateValue = res.planed_start_date
@@ -123,12 +129,18 @@ export class RequestEditFormComponent {
           (s: ServiceWithQuantity | null): s is ServiceWithQuantity => !!s
         );
 
+      let brigadesTemp = this.brigades();
+
+      brigadesTemp.push(res.brigadier);
+
+      this.brigades.set(brigadesTemp);
+
       this.requestForm.patchValue({
         contractNumber: res.contract_number || '',
         status: res.status || 'none',
         date: dateValue,
         time: timeValue,
-        brigade: String(res.brigadier_id ?? 'none'),
+        brigade: String(res.brigadier.id),
         comment: res.comment || '',
         work_comment: res.work_comment || '',
         services: servicesFromRequest,

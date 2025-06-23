@@ -9,15 +9,44 @@
             <th class="call-requests__cell">Телефон</th>
             <th class="call-requests__cell">Комментарий</th>
             <th class="call-requests__cell">Статус</th>
+            <th class="call-requests__cell">Действие</th>
           </tr>
         </thead>
         <tbody class="call-requests__tbody">
           @for (request of callRequests; track request.id) {
-          <tr class="call-requests__row">
+          <tr
+            class="call-requests__row"
+            [formGroup]="callRequestsForms.at($index)"
+          >
             <td class="call-requests__cell">{{ request.fio }}</td>
             <td class="call-requests__cell">{{ request.phone_number }}</td>
-            <td class="call-requests__cell">{{ request.comment }}</td>
-            <td class="call-requests__cell">{{ request.status }}</td>
+            <td class="call-requests__cell">
+              <textarea
+                class="call-requests__cell-textarea"
+                formControlName="comment"
+                rows="2"
+                cols="30"
+              ></textarea>
+            </td>
+            <td class="call-requests__cell">
+              <select
+                class="call-requests__cell-select"
+                formControlName="status"
+              >
+                <option value="new">Новый</option>
+                <option value="in_progress">Перезвонить</option>
+                <option value="completed">Завершен</option>
+                <option value="cancelled">Отменен</option>
+              </select>
+            </td>
+            <td class="call-requests__cell">
+              <button
+                class="call-requests__cell-button"
+                (click)="onSave($index, request.id)"
+              >
+                Сохранить
+              </button>
+            </td>
           </tr>
           }
         </tbody>

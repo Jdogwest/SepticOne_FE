@@ -1,0 +1,55 @@
+<div class="calendar">
+  <h1 class="calendar__title">Календарь работ</h1>
+
+  <h2 class="calendar__month-title">{{ months[month] }} {{ year }}</h2>
+
+  <table class="calendar__table">
+    <thead class="calendar__head">
+      <tr class="calendar__weekdays">
+        <th class="calendar__weekday">Пн</th>
+        <th class="calendar__weekday">Вт</th>
+        <th class="calendar__weekday">Ср</th>
+        <th class="calendar__weekday">Чт</th>
+        <th class="calendar__weekday">Пт</th>
+        <th class="calendar__weekday">Сб</th>
+        <th class="calendar__weekday">Вс</th>
+      </tr>
+    </thead>
+    <tbody class="calendar__body">
+      @for (week of calendarDays; track week[0]?.date) {
+      <tr class="calendar__week">
+        @for (day of week; track day?.date) {
+        <td
+          class="calendar__day"
+          [class.calendar__day--empty]="!day.date"
+          [class.calendar__day--weekend]="day && day.date ? (day.date.getDay() === 6 || day.date.getDay() === 0) : false"
+          [class.calendar__day--busy]="day.busy"
+        >
+          @if (day.date) {
+          <div class="calendar__cell">
+            <div class="calendar__date">{{ day.date.getDate() }}</div>
+
+            @for (brigad of day.brigadsStatus; track brigad.brigadId) {
+            <div class="calendar__brigad">
+              <h3 class="calendar__brigad-title">
+                {{ brigad.brigadSurname }} {{ brigad.brigadName[0] }}.{{
+                  brigad.brigadPatronymic[0]
+                }}.
+              </h3>
+              <a
+                [routerLink]="'/admin/request-edit/' + brigad.request_id"
+                class="calendar__brigad-text"
+              >
+                Заявка №{{ brigad.request_id }}
+              </a>
+            </div>
+            }
+          </div>
+          }
+        </td>
+        }
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>

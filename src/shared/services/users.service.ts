@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { API_BE_HOST } from '../../../env';
+import { UserUpdate } from '@/manager-page/interfaces/user-edit.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,9 @@ export class UsersService {
     userById: (id: number) => API_BE_HOST + `users/${id}/`,
     editUser: API_BE_HOST + 'users/edit-user/',
     getAllClients: API_BE_HOST + 'users/all_clients/',
+    updateUserFull: (id: number) => API_BE_HOST + `users/edit-user-full/${id}`,
+    updateUserAndRole: (id: number) =>
+      API_BE_HOST + `users/edit-user-and-role/${id}`,
   };
 
   private readonly httpClient = inject(HttpClient);
@@ -38,6 +42,17 @@ export class UsersService {
 
   editUser(userData: UserFormData): Observable<any> {
     return this.httpClient.put(this.apiUrls.editUser, userData, {
+      withCredentials: true,
+    });
+  }
+  updateUserFull(id: number, data: UserUpdate) {
+    return this.httpClient.put(this.apiUrls.updateUserFull(id), data, {
+      withCredentials: true,
+    });
+  }
+
+  updateUserAndRole(id: number, data: UserUpdate) {
+    return this.httpClient.put(this.apiUrls.updateUserAndRole(id), data, {
       withCredentials: true,
     });
   }

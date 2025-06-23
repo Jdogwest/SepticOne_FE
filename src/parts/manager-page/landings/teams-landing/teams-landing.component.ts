@@ -1,5 +1,6 @@
 import { Brigade, Workman } from '@/shared/interfaces/brigade.interface';
 import { BrigadeService } from '@/shared/services/brigade.service';
+import { NotificationService } from '@/shared/services/notification.service';
 import {
   CdkDragDrop,
   DragDropModule,
@@ -7,7 +8,7 @@ import {
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { finalize } from 'rxjs';
 
 @Component({
@@ -20,8 +21,8 @@ import { finalize } from 'rxjs';
 export class TeamsLandingComponent implements OnInit {
   brigades: Brigade[] = [];
   freeWorkers: Workman[] = [];
-
-  constructor(private brigadeService: BrigadeService) {}
+  private readonly brigadeService = inject(BrigadeService);
+  private readonly notificationService = inject(NotificationService);
 
   ngOnInit(): void {
     this.loadBrigades();
@@ -42,7 +43,8 @@ export class TeamsLandingComponent implements OnInit {
           })),
         }));
       },
-      error: (err) => console.error('Ошибка при загрузке бригад', err),
+      error: (err) =>
+        this.notificationService.error(`Ошибка при загрузке бригад: ${err}`),
     });
   }
 
@@ -57,7 +59,9 @@ export class TeamsLandingComponent implements OnInit {
         }));
       },
       error: (err) =>
-        console.error('Ошибка при загрузке свободных работников', err),
+        this.notificationService.error(
+          `Ошибка при загрузке свободных работников" ${err}`
+        ),
     });
   }
 
@@ -80,7 +84,6 @@ export class TeamsLandingComponent implements OnInit {
   }
 
   syncBrigadesWithServer(): void {
-    console.log(this.brigades);
     const brigadsPayload = this.brigades.map((brigade) => ({
       brigadier_id: brigade.brigadier_id,
       workman_ids: brigade.workmen.map((w) => w.id),
@@ -89,9 +92,6 @@ export class TeamsLandingComponent implements OnInit {
       .editBrigade(brigadsPayload)
       .pipe(finalize(() => this.loadFreeWorkers()))
       .subscribe({
-        next: () => {
-          console.log('Успешно синхронизировано');
-        },
         error: (err) => {
           throw new Error('Ошибка при синхронизации', err);
         },

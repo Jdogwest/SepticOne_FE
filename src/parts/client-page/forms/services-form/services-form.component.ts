@@ -33,10 +33,9 @@ export class ServicesFormComponent {
     this.serviceService.getAllServices().subscribe({
       next: (data) => {
         this.services = data as Service[];
-        console.log(this.services);
       },
       error: (err) => {
-        console.error('Ошибка при получении услуг:', err);
+        this.notificationService.error(`Ошибка при получении услуг: ${err}`);
       },
     });
     this.requestsService.getBrigadeBusyDate().subscribe({
@@ -185,14 +184,10 @@ export class ServicesFormComponent {
       };
       this.requestsService.addRequest(payload).subscribe({
         next: (res: any) => {
-          this.notificationService.success(
-            res?.detail || 'Заявка успешно создана'
-          );
+          this.notificationService.success('Заявка успешно создана');
         },
         error: (err) => {
-          this.notificationService.error(
-            err?.error?.detail || 'Ошибка создания заявки'
-          );
+          this.notificationService.error(`Ошибка создания заявки: ${err}`);
         },
       });
     }

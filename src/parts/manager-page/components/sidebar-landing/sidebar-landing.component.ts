@@ -13,7 +13,6 @@ import { User } from '@/shared/interfaces/user.interface';
 })
 export class SidebarLandingComponent {
   private readonly authService = inject(AuthService);
-  // private readonly userService = inject(UsersService);
 
   private readonly notificationService = inject(NotificationService);
 
@@ -35,7 +34,7 @@ export class SidebarLandingComponent {
       },
       error: (err) => {
         this.notificationService.error(
-          err?.error?.detail || 'Ошибка получения данных сессии'
+          `Ошибка получения данных сессии: ${err}`
         );
       },
     });
@@ -44,13 +43,11 @@ export class SidebarLandingComponent {
   logout() {
     this.authService.logout().subscribe({
       next: (res: any) => {
-        this.notificationService.success(
-          res?.detail || 'Выход выполнен успешно'
-        );
+        this.notificationService.success('Выход выполнен успешно');
         this.router.navigate(['']);
       },
       error: (err) => {
-        this.notificationService.error(err?.error?.detail || 'Ошибка выхода');
+        this.notificationService.error(`Ошибка выхода: ${err}`);
       },
     });
   }

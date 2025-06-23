@@ -79,15 +79,11 @@ export class AddressFormComponent {
 
       this.septicService.editSeptic(body).subscribe({
         next: (res: any) => {
-          this.notificationService.success(
-            res?.detail || 'Септик успешно обновлён'
-          );
+          this.notificationService.success('Септик успешно обновлён');
           this.disableEdit();
         },
         error: (err) => {
-          this.notificationService.error(
-            err?.error?.detail || 'Ошибка обновления септика'
-          );
+          this.notificationService.error(`Ошибка обновления септика: ${err}`);
         },
       });
     }

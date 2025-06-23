@@ -44,12 +44,10 @@ export class HeaderLandingComponent implements OnInit {
   logout(): void {
     this.authService.logout().subscribe({
       next: (res: any) => {
-        this.notificationService.success(
-          res?.detail || 'Выход выполнен успешно'
-        );
+        this.notificationService.success('Выход выполнен успешно');
       },
       error: (err) => {
-        this.notificationService.error(err?.error?.detail || 'Ошибка выхода');
+        this.notificationService.error(`Ошибка выхода: ${err}`);
       },
     });
   }

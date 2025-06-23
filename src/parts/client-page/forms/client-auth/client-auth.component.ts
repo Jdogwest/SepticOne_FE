@@ -52,7 +52,7 @@ export class ClientAuthComponent {
           }
         },
         error: (err) => {
-          this.notificationService.error(err?.error?.detail || 'Ошибка входа');
+          this.notificationService.error(`Ошибка входа: ${err}`);
         },
       });
   }
@@ -73,14 +73,10 @@ export class ClientAuthComponent {
       )
       .subscribe({
         next: (res: any) => {
-          this.notificationService.success(
-            res?.detail || 'Регистрация прошла успешно'
-          );
+          this.notificationService.success('Регистрация прошла успешно');
         },
         error: (err) => {
-          this.notificationService.error(
-            err?.error?.detail || 'Ошибка регистрации'
-          );
+          this.notificationService.error(`Ошибка регистрации: ${err}`);
         },
       });
   }

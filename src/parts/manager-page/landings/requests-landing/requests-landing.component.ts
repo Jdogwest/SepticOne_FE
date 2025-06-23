@@ -3,6 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RequestsService } from '@/shared/services/requests.service';
 import { MyRequest } from '@/shared/interfaces/my-request.interface';
 import { RouterLink } from '@angular/router';
+import { NotificationService } from '@/shared/services/notification.service';
 
 @Component({
   selector: 'app-requests-landing',
@@ -19,6 +20,7 @@ export class RequestsLandingComponent implements OnInit {
   });
 
   private readonly requestsService = inject(RequestsService);
+  private readonly notificationService = inject(NotificationService);
 
   statusMap: Record<string, string> = {
     new: 'Новая',
@@ -49,7 +51,7 @@ export class RequestsLandingComponent implements OnInit {
         this.sortRequests(status);
       },
       error: (err) => {
-        console.error('Ошибка при получении заявок', err);
+        this.notificationService.error(`Ошибка при получении заявок: ${err}`);
       },
     });
   }

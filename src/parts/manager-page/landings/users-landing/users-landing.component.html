@@ -23,13 +23,7 @@
           </td>
           <td class="users__table-cell">{{ user.email }}</td>
           <td class="users__table-cell">
-            {{
-              user.role === "admin"
-                ? "Администратор"
-                : user.role === "manager"
-                ? "Менеджер"
-                : "Клиент"
-            }}
+            {{ roleToLabel[user.role] || "Неизвестно" }}
           </td>
           <td class="users__table-cell">
             <a

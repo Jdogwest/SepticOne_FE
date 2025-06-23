@@ -1,5 +1,6 @@
 import { UserFormData } from '@/manager-page/interfaces/user-form.interface';
 import { AuthService } from '@/shared/services/auth.service';
+import { NotificationService } from '@/shared/services/notification.service';
 import { UsersService } from '@/shared/services/users.service';
 import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -17,6 +18,7 @@ type FormControlsOf<T> = {
 })
 export class UserEditComponent {
   user = signal<any>(null);
+  userId!: number;
 
   userForm = new FormGroup<FormControlsOf<UserFormData>>({
     surname: new FormControl(''),
@@ -35,10 +37,11 @@ export class UserEditComponent {
   private readonly usersService = inject(UsersService);
   private readonly authService = inject(AuthService);
   private readonly route = inject(ActivatedRoute);
+  private readonly notificationService = inject(NotificationService);
 
   ngOnInit(): void {
-    const userId = this.route.snapshot.params['id'];
-    this.loadUserById(userId);
+    this.userId = +this.route.snapshot.params['id'];
+    this.loadUserById(this.userId);
 
     this.authService.getSessionData().subscribe({
       next: (data) => {
@@ -50,30 +53,77 @@ export class UserEditComponent {
   loadUserById(id: number): void {
     this.usersService.getUserById(id).subscribe({
       next: (data: any) => {
+        const septic = data.septic || {};
+
         this.userForm.patchValue({
-          surname: data.surname || '',
-          name: data.name || '',
-          patronymic: data.patronymic || '',
-          email: data.email || '',
-          phone: data.phone_number || '',
-          role: data.role || 'client',
-          city: data.city || '',
-          street: data.street || '',
-          house: data.house || '',
-          septicModel: data.septicModel || '',
-          septicVolume: data.septicVolume || null,
+          surname: data.user.surname || '',
+          name: data.user.name || '',
+          patronymic: data.user.patronymic || '',
+          email: data.user.email || '',
+          phone: data.user.phone_number || '',
+          role: data.user.role || 'client',
+          city: septic.city || '',
+          street: septic.street || '',
+          house: septic.house || '',
+          septicModel: septic.model || '',
+          septicVolume: septic.volume || null,
         });
       },
       error: (err: any) => {
-        console.error(`Ошибка при получении пользователя с id ${id}`, err);
+        this.notificationService.error(
+          `Ошибка при получении пользователя с id ${id}: ${err}`
+        );
       },
     });
   }
 
   onSave(): void {
-    if (this.userForm.valid) {
-      const formData = this.userForm.getRawValue();
-      console.log('Отправка данных:', formData);
-    }
+    if (this.userForm.invalid) return;
+
+    const formData = this.userForm.getRawValue();
+
+    const client = {
+      name: formData.name || '',
+      surname: formData.surname || '',
+      patronymic: formData.patronymic || '',
+      email: formData.email || '',
+      phone_number: formData.phone || '',
+    };
+
+    const septic = {
+      city: formData.city || '',
+      street: formData.street || '',
+      house: formData.house || '',
+      volume: formData.septicVolume || 0,
+      model: formData.septicModel || '',
+    };
+
+    const isAdmin = this.user()?.role === 'admin';
+
+    const payload = isAdmin
+      ? {
+          client,
+          septic,
+          new_role: formData.role || 'client',
+        }
+      : {
+          client,
+          septic,
+        };
+
+    const save$ = isAdmin
+      ? this.usersService.updateUserAndRole(this.userId, payload)
+      : this.usersService.updateUserFull(this.userId, payload);
+
+    save$.subscribe({
+      next: () => {
+        this.notificationService.success('Пользователь успешно обновлён');
+      },
+      error: (err) => {
+        this.notificationService.error(
+          `Ошибка при обновлении пользователя: ${err}`
+        );
+      },
+    });
   }
 }

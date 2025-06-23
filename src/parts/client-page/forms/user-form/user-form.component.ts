@@ -55,7 +55,9 @@ export class UserFormComponent implements OnInit {
           }
         },
         error: (err) => {
-          console.error('Ошибка при получении данных пользователя:', err);
+          this.notificationService.error(
+            `Ошибка при получении данных пользователя: ${err}`
+          );
         },
       });
   }
