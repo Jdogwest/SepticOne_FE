@@ -23,23 +23,32 @@ export class ServicesFormComponent {
   services: Service[] = [];
   private readonly serviceService = inject(ServiceService);
   private readonly requestsService = inject(RequestsService);
-
-  private notificationService = inject(NotificationService);
+  private readonly notificationService = inject(NotificationService);
 
   ngOnInit() {
     this.loadServices();
   }
 
   loadServices() {
-    this.serviceService.getAllServices().subscribe(
-      (data) => {
+    this.serviceService.getAllServices().subscribe({
+      next: (data) => {
         this.services = data as Service[];
         console.log(this.services);
       },
-      (err) => {
+      error: (err) => {
         console.error('Ошибка при получении услуг:', err);
-      }
-    );
+      },
+    });
+    this.requestsService.getBrigadeBusyDate().subscribe({
+      next: (data) => {
+        for (const date of data as string[]) {
+          this.busyDates.push(new Date(date));
+        }
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
   }
 
   serviceForm = new FormGroup<FormControlsOf<ServicesFormData>>({
@@ -59,11 +68,7 @@ export class ServicesFormComponent {
 
   today: Date = new Date();
 
-  busyDates: Date[] = [
-    new Date('2025-06-07'),
-    new Date('2025-06-08'),
-    new Date('2025-06-09'),
-  ];
+  busyDates: Date[] = [];
   times = [
     { label: '08:00', value: '08:00' },
     { label: '09:00', value: '09:00' },

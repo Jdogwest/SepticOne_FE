@@ -96,8 +96,8 @@
     }
   }
   &__button {
-    @include button();
     width: 100%;
+    @include button();
   }
   &__footer {
     text-align: center;

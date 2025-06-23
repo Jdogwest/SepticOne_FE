@@ -4,4 +4,5 @@ export interface Service {
   price: number;
   description: string;
   time_to_complete: number;
+  quantity: number;
 }

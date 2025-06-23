@@ -1,0 +1,171 @@
+<form class="request-edit__form" [formGroup]="requestForm">
+  <h2 class="request-edit__form-title">Редактирование заявки</h2>
+
+  <div class="request-edit__form-group">
+    <label class="request-edit__form-label" for="service">Услуги</label>
+
+    <div class="request-edit__form-selected-list">
+      @for (service of selectedServices; let i = $index; track i) {
+      <div class="request-edit__form-selected">
+        <p class="request-edit__form-selected-title">
+          {{ service.name }} ({{ service.price | number : "1.2-2" }} ₽)
+        </p>
+        <div class="request-edit__form-selected-controls">
+          <div class="request-edit__form-selected-quantity">
+            <button
+              class="request-edit__form-btn--decrease"
+              type="button"
+              (click)="decreaseQuantity(i)"
+            >
+              -
+            </button>
+            <p class="request-edit__form-selected-quantity-value">
+              {{ service.quantity }}
+            </p>
+            <button
+              class="request-edit__form-btn--increase"
+              type="button"
+              (click)="increaseQuantity(i)"
+            >
+              +
+            </button>
+          </div>
+        </div>
+        <button
+          type="button"
+          class="request-edit__form-btn--remove"
+          (click)="removeService(i)"
+          aria-label="Удалить услугу"
+        >
+          ×
+        </button>
+      </div>
+      }
+    </div>
+
+    <div class="request-edit__form-add-row">
+      @if (showSelect) {
+      <select
+        class="request-edit__form-input"
+        [formControl]="selectedServiceId"
+        id="service"
+      >
+        <option value="none">Не выбрано</option>
+        @for (service of services; track service.id) {
+        <option [value]="service.id">
+          {{ service.name }} ({{ service.price | number : "1.2-2" }} ₽)
+        </option>
+        }
+      </select>
+      <button
+        type="button"
+        class="request-edit__form-btn request-edit__form-btn--add"
+        (click)="addService()"
+        [disabled]="selectedServiceId.value === 'none'"
+      >
+        Добавить
+      </button>
+      } @else {
+      <button
+        type="button"
+        class="request-edit__form-btn request-edit__form-btn--add"
+        (click)="showAddSelect()"
+      >
+        Добавить еще
+      </button>
+      }
+    </div>
+  </div>
+
+  <div class="request-edit__form-group">
+    <label for="contractNumber" class="request-edit__form-label"
+      >Номер договора</label
+    >
+    <input
+      type="text"
+      id="contractNumber"
+      class="request-edit__form-input"
+      formControlName="contractNumber"
+      placeholder="Введите номер договора"
+    />
+  </div>
+
+  <div class="request-edit__form-group">
+    <label for="status" class="request-edit__form-label">Статус заявки</label>
+    <select
+      id="status"
+      class="request-edit__form-select"
+      formControlName="status"
+    >
+      <option value="new">Новая</option>
+      <option value="in_work">В процессе</option>
+      <option value="completed">Завершена</option>
+      <option value="cancelled">Отменена</option>
+    </select>
+  </div>
+
+  <div class="request-edit__form-group">
+    <label class="request-edit__form-label" for="date">Дата выполнения</label>
+    <p-datepicker
+      formControlName="date"
+      [iconDisplay]="'input'"
+      [showIcon]="true"
+      [disabledDates]="busyDates"
+      placeholder="Не выбрано"
+    ></p-datepicker>
+  </div>
+
+  <div class="request-edit__form-group">
+    <label for="time" class="request-edit__form-label">Время</label>
+    <select id="time" class="request-edit__form-select" formControlName="time">
+      <option value="none">Не выбрано</option>
+      @for (t of times; track t.value) {
+      <option [value]="t.value">{{ t.label }}</option>
+      }
+    </select>
+  </div>
+
+  <div class="request-edit__form-group">
+    <label for="brigade" class="request-edit__form-label">Бригада</label>
+    <select
+      id="brigade"
+      class="request-edit__form-select"
+      formControlName="brigade"
+    >
+      <option value="none">Не выбрано</option>
+      @for (brigade of brigades(); track brigade.id) {
+      <option [value]="brigade.id">
+        {{ brigade.surname }} {{ brigade.name }} ( рабочих:
+        {{ brigade.workmans_count }} )
+      </option>
+      }
+    </select>
+  </div>
+
+  <div class="request-edit__form-group">
+    <label for="comment" class="request-edit__form-label">Комментарий</label>
+    <textarea
+      id="comment"
+      class="request-edit__form-textarea"
+      formControlName="work_comment"
+    ></textarea>
+  </div>
+
+  <div class="request-edit__form-group-buttons">
+    <div class="request-edit__form-group-button">
+      <button
+        type="button"
+        class="request-edit__form-button request-edit__form-button--save"
+        (click)="onSave()"
+      >
+        Сохранить
+      </button>
+      <button
+        type="button"
+        class="request-edit__form-button request-edit__form-button--cancel"
+      >
+        Отменить
+      </button>
+    </div>
+  </div>
+</form>

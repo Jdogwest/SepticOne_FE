@@ -11,6 +11,7 @@ import { finalize } from 'rxjs';
 import { AuthService } from '@/shared/services/auth.service';
 import { NotificationService } from '@/shared/services/notification.service';
 import { registrationFormInterface } from '@/shared/interfaces/auth-form.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-client-auth',
@@ -20,14 +21,12 @@ import { registrationFormInterface } from '@/shared/interfaces/auth-form.interfa
 })
 export class ClientAuthComponent {
   @Output() close = new EventEmitter<void>();
-
   private readonly authService = inject(AuthService);
-
   protected readonly isLogin = signal(true);
-
   protected readonly loginForm = this.getNewLoginFormGroup();
   protected readonly registrationForm = this.getNewRegistrationFormGroup();
-  private notificationService = inject(NotificationService);
+  private readonly notificationService = inject(NotificationService);
+  private readonly router = inject(Router);
 
   protected login() {
     this.authService
@@ -45,6 +44,12 @@ export class ClientAuthComponent {
           this.notificationService.success(
             res?.detail || 'Вход выполнен успешно'
           );
+          const role = res?.role;
+          if (role === 'admin' || role === 'manager') {
+            this.router.navigate(['/admin']);
+          } else {
+            this.router.navigate(['/']);
+          }
         },
         error: (err) => {
           this.notificationService.error(err?.error?.detail || 'Ошибка входа');
