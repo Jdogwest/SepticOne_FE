@@ -70,11 +70,12 @@ export class UserEditComponent {
         });
       },
       error: (err: any) => {
-        this.notificationService.error(
-          `Ошибка при получении пользователя с id ${id}: ${
-            err?.error?.detail || 'Неизвестная ошибка'
-          }`
-        );
+        // this.notificationService.error(
+        //   `Ошибка при получении пользователя с id ${id}: ${
+        //     err?.error?.detail || 'Неизвестная ошибка'
+        //   }`
+        // );
+        console.error(err);
       },
     });
   }
@@ -122,11 +123,12 @@ export class UserEditComponent {
         this.notificationService.success('Пользователь успешно обновлён');
       },
       error: (err) => {
-        this.notificationService.error(
-          `Ошибка при обновлении пользователя: ${
-            err?.error?.detail || 'Неизвестная ошибка'
-          }`
-        );
+        // this.notificationService.error(
+        //   `Ошибка при обновлении пользователя: ${
+        //     err?.error?.detail || 'Неизвестная ошибка'
+        //   }`
+        // );
+        console.error(err);
       },
     });
   }

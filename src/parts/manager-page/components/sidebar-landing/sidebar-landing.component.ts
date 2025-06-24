@@ -33,11 +33,12 @@ export class SidebarLandingComponent {
         this.user = session?.user || null;
       },
       error: (err) => {
-        this.notificationService.error(
-          `Ошибка получения данных сессии: ${
-            err?.error?.detail || 'Неизвестная ошибка'
-          }`
-        );
+        // this.notificationService.error(
+        //   `Ошибка получения данных сессии: ${
+        //     err?.error?.detail || 'Неизвестная ошибка'
+        //   }`
+        // );
+        console.error(err);
       },
     });
   }
@@ -49,9 +50,10 @@ export class SidebarLandingComponent {
         this.router.navigate(['']);
       },
       error: (err) => {
-        this.notificationService.error(
-          `Ошибка выхода: ${err?.error?.detail || 'Неизвестная ошибка'}`
-        );
+        // this.notificationService.error(
+        //   `Ошибка выхода: ${err?.error?.detail || 'Неизвестная ошибка'}`
+        // );
+        console.error(err);
       },
     });
   }

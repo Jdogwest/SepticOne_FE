@@ -55,11 +55,12 @@ export class UserFormComponent implements OnInit {
           }
         },
         error: (err) => {
-          this.notificationService.error(
-            `Ошибка при получении данных пользователя: ${
-              err?.error?.detail || 'Неизвестная ошибка'
-            }`
-          );
+          // this.notificationService.error(
+          //   `Ошибка при получении данных пользователя: ${
+          //     err?.error?.detail || 'Неизвестная ошибка'
+          //   }`
+          // );
+          console.error(err);
         },
       });
   }
@@ -100,11 +101,12 @@ export class UserFormComponent implements OnInit {
           this.authService.refreshSession().subscribe();
         },
         error: (err) => {
-          this.notificationService.error(
-            `Ошибка редактирования: ${
-              err?.error?.detail || 'Неизвестная ошибка'
-            }`
-          );
+          // this.notificationService.error(
+          //   `Ошибка редактирования: ${
+          //     err?.error?.detail || 'Неизвестная ошибка'
+          //   }`
+          // );
+          console.error(err);
         },
       });
     }

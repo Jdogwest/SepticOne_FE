@@ -37,10 +37,11 @@ export class ContactFormComponent {
         next: (response: { detail?: string }) => {
           this.notificationService.success('Данные отправлены');
         },
-        error: (error: { detail?: string }) => {
-          this.notificationService.error(
-            `Ошибка при отправке данных: ${error}`
-          );
+        error: (err: { detail?: string }) => {
+          // this.notificationService.error(
+          //   `Ошибка при отправке данных: ${error}`
+          // );
+          console.error(err);
         },
       });
     }

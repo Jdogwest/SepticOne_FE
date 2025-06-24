@@ -84,11 +84,8 @@ export class AddressFormComponent {
           this.authService.refreshSession().subscribe();
         },
         error: (err) => {
-          this.notificationService.error(
-            `Ошибка обновления септика: ${
-              err?.error?.detail || 'Неизвестная ошибка'
-            }`
-          );
+          // this.notificationService.error(`Ошибка обновления септика: ${err?.error?.detail || 'Неизвестная ошибка'}`);
+          console.error(err);
         },
       });
     }

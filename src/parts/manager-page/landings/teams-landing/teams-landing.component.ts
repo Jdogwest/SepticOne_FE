@@ -44,11 +44,12 @@ export class TeamsLandingComponent implements OnInit {
         }));
       },
       error: (err) =>
-        this.notificationService.error(
-          `Ошибка при загрузке бригад: ${
-            err?.error?.detail || 'Неизвестная ошибка'
-          }`
-        ),
+        // this.notificationService.error(
+        //   `Ошибка при загрузке бригад: ${
+        //     err?.error?.detail || 'Неизвестная ошибка'
+        //   }`
+        // ),
+        console.error(err),
     });
   }
 
@@ -63,11 +64,12 @@ export class TeamsLandingComponent implements OnInit {
         }));
       },
       error: (err) =>
-        this.notificationService.error(
-          `Ошибка при загрузке свободных работников" ${
-            err?.error?.detail || 'Неизвестная ошибка'
-          }`
-        ),
+        // this.notificationService.error(
+        //   `Ошибка при загрузке свободных работников" ${
+        //     err?.error?.detail || 'Неизвестная ошибка'
+        //   }`
+        // ),
+        console.error(err),
     });
   }
 

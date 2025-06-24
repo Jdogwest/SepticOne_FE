@@ -102,9 +102,10 @@ export class RequestEditFormComponent {
     this.serviceService.getAllServices().subscribe({
       next: (res) => (this.services = res),
       error: (err) =>
-        this.notificationService.error(
-          `Ошибка загрузки услуг: ${err?.error?.detail || 'Неизвестная ошибка'}`
-        ),
+        // this.notificationService.error(
+        //   `Ошибка загрузки услуг: ${err?.error?.detail || 'Неизвестная ошибка'}`
+        // ),
+        console.error(err),
     });
   }
 
@@ -250,11 +251,12 @@ export class RequestEditFormComponent {
     this.requestsService.editByIdRequest(id, payload).subscribe({
       next: () => this.notificationService.success('Заявка успешно обновлена'),
       error: (err) =>
-        this.notificationService.error(
-          `Ошибка при обновлении заявки: ${
-            err?.error?.detail || 'Неизвестная ошибка'
-          }`
-        ),
+        // this.notificationService.error(
+        //   `Ошибка при обновлении заявки: ${
+        //     err?.error?.detail || 'Неизвестная ошибка'
+        //   }`
+        // ),
+        console.error(err),
     });
   }
 }

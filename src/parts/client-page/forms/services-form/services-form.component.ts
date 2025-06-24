@@ -35,11 +35,12 @@ export class ServicesFormComponent {
         this.services = data as Service[];
       },
       error: (err) => {
-        this.notificationService.error(
-          `Ошибка при получении услуг: ${
-            err?.error?.detail || 'Неизвестная ошибка'
-          }`
-        );
+        // this.notificationService.error(
+        //   `Ошибка при получении услуг: ${
+        //     err?.error?.detail || 'Неизвестная ошибка'
+        //   }`
+        // );
+        console.error(err);
       },
     });
     this.requestsService.getBrigadeBusyDate().subscribe({
@@ -191,11 +192,12 @@ export class ServicesFormComponent {
           this.notificationService.success('Заявка успешно создана');
         },
         error: (err) => {
-          this.notificationService.error(
-            `Ошибка создания заявки: ${
-              err?.error?.detail || 'Неизвестная ошибка'
-            }`
-          );
+          // this.notificationService.error(
+          //   `Ошибка создания заявки: ${
+          //     err?.error?.detail || 'Неизвестная ошибка'
+          //   }`
+          // );
+          console.error(err);
         },
       });
     }

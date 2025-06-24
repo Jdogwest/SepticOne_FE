@@ -35,11 +35,12 @@ export class UsersLandingComponent implements OnInit {
         this.loadUsers();
       },
       error: (err: any) => {
-        this.notificationService.error(
-          `Ошибка при получении текущего пользователя: ${
-            err?.error?.detail || 'Неизвестная ошибка'
-          }`
-        );
+        // this.notificationService.error(
+        //   `Ошибка при получении текущего пользователя: ${
+        //     err?.error?.detail || 'Неизвестная ошибка'
+        //   }`
+        // );
+        console.error(err);
       },
     });
   }
@@ -61,16 +62,18 @@ export class UsersLandingComponent implements OnInit {
         if (Array.isArray(data)) {
           this.users = data;
         } else {
-          this.notificationService.error(`Ошибка: ${data}`);
+          // this.notificationService.error(`Ошибка: ${data}`);
+          console.error(data);
           this.users = [];
         }
       },
       error: (err) => {
-        this.notificationService.error(
-          `Ошибка при получении пользователей: ${
-            err?.error?.detail || 'Неизвестная ошибка'
-          }`
-        );
+        // this.notificationService.error(
+        //   `Ошибка при получении пользователей: ${
+        //     err?.error?.detail || 'Неизвестная ошибка'
+        //   }`
+        // );
+        console.error(err);
       },
     });
   }

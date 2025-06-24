@@ -109,11 +109,12 @@ export class CalendarComponent implements OnInit {
         });
       },
       error: (err) => {
-        this.notificationService.error(
-          `Ошибка загрузки занятых дат: ${
-            err?.error?.detail || 'Неизвестная ошибка'
-          }`
-        );
+        // this.notificationService.error(
+        //   `Ошибка загрузки занятых дат: ${
+        //     err?.error?.detail || 'Неизвестная ошибка'
+        //   }`
+        // );
+        console.error(err);
       },
     });
   }

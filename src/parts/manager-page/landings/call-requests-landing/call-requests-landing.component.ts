@@ -37,11 +37,12 @@ export class CallRequestsLandingComponent implements OnInit {
         });
       },
       error: (err) => {
-        this.notificationService.error(
-          `Ошибка при получении заявок: ${
-            err?.error?.detail || 'Неизвестная ошибка'
-          }`
-        );
+        // this.notificationService.error(
+        //   `Ошибка при получении заявок: ${
+        //     err?.error?.detail || 'Неизвестная ошибка'
+        //   }`
+        // );
+        console.error(err);
       },
     });
   }
@@ -61,11 +62,12 @@ export class CallRequestsLandingComponent implements OnInit {
           this.callRequests[index].comment = updatedData.comment;
         },
         error: (err) => {
-          this.notificationService.error(
-            `Ошибка при обновлении заявки: ${
-              err?.error?.detail || 'Неизвестная ошибка'
-            }`
-          );
+          // this.notificationService.error(
+          //   `Ошибка при обновлении заявки: ${
+          //     err?.error?.detail || 'Неизвестная ошибка'
+          //   }`
+          // );
+          console.error(err);
         },
       });
   }
