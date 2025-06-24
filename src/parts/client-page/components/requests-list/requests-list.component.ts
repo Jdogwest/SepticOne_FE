@@ -13,7 +13,7 @@ export class RequestsListComponent {
   statusMap: Record<string, string> = {
     new: 'Новая',
     in_work: 'В работе',
-    complete: 'Завершена',
+    completed: 'Завершена',
     cancelled: 'Отменена',
   };
 

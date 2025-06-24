@@ -43,12 +43,15 @@ export class CalendarComponent implements OnInit {
   }
 
   loadBrigadsSchedule() {
-    console.log('Загрузка расписания бригад...');
+    function formatDateToISOLocal(date: Date): string {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
 
     this.brigadeService.getBrigadeBusyDate().subscribe({
       next: (busyDatesResponse) => {
-        console.log('Получены занятые даты от сервера:', busyDatesResponse);
-
         const busyDatesMap = new Map<
           string,
           BusyDateResponse['busy_brigadiers']
@@ -61,13 +64,10 @@ export class CalendarComponent implements OnInit {
         this.calendarDays.forEach((week, weekIndex) => {
           week.forEach((day, dayIndex) => {
             if (day.date) {
-              const isoDate = day.date.toISOString().slice(0, 10);
+              const isoDate = formatDateToISOLocal(day.date);
+
               const brigadiers = busyDatesMap.get(isoDate);
-              console.log(
-                `Проверка даты ${isoDate}: ${
-                  brigadiers ? 'занята' : 'свободна'
-                }`
-              );
+
               if (brigadiers) {
                 day.busy = true;
                 day.brigadsStatus = brigadiers.map((b) => ({
@@ -78,7 +78,6 @@ export class CalendarComponent implements OnInit {
                   brigadPatronymic: b.patronymic,
                   busyTimes: [],
                 }));
-                console.log(`Бригады на ${isoDate}:`, day.brigadsStatus);
               } else {
                 day.busy = false;
                 day.brigadsStatus = [];
@@ -86,8 +85,6 @@ export class CalendarComponent implements OnInit {
             }
           });
         });
-
-        console.log('Календарь после обработки:', this.calendarDays);
       },
       error: (err) => {
         console.error(
@@ -99,7 +96,6 @@ export class CalendarComponent implements OnInit {
   }
 
   generateCalendar(year: number, month: number) {
-    console.log(`Генерация календаря на ${month + 1}.${year}`);
     const firstDay = new Date(year, month, 1);
     const lastDay = new Date(year, month + 1, 0);
     const firstWeekday = firstDay.getDay() || 7;
@@ -129,6 +125,5 @@ export class CalendarComponent implements OnInit {
     }
 
     this.calendarDays = weeks;
-    console.log('Сгенерированные дни календаря:', this.calendarDays);
   }
 }
