@@ -36,7 +36,9 @@ export class UsersLandingComponent implements OnInit {
       },
       error: (err: any) => {
         this.notificationService.error(
-          `Ошибка при получении текущего пользователя: ${err}`
+          `Ошибка при получении текущего пользователя: ${
+            err?.error?.detail || 'Неизвестная ошибка'
+          }`
         );
       },
     });
@@ -65,7 +67,9 @@ export class UsersLandingComponent implements OnInit {
       },
       error: (err) => {
         this.notificationService.error(
-          `Ошибка при получении пользователей: ${err}`
+          `Ошибка при получении пользователей: ${
+            err?.error?.detail || 'Неизвестная ошибка'
+          }`
         );
       },
     });

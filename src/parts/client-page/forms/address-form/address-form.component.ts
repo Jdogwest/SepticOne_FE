@@ -35,7 +35,7 @@ export class AddressFormComponent {
   });
 
   ngOnInit() {
-    this.authService.getSessionData().subscribe((session) => {
+    this.authService.getSessionData(true).subscribe((session) => {
       if (!session) return;
 
       const septic = session.septic;
@@ -81,9 +81,14 @@ export class AddressFormComponent {
         next: (res: any) => {
           this.notificationService.success('Септик успешно обновлён');
           this.disableEdit();
+          this.authService.refreshSession().subscribe();
         },
         error: (err) => {
-          this.notificationService.error(`Ошибка обновления септика: ${err}`);
+          this.notificationService.error(
+            `Ошибка обновления септика: ${
+              err?.error?.detail || 'Неизвестная ошибка'
+            }`
+          );
         },
       });
     }

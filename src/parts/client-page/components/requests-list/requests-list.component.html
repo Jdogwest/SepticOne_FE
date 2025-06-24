@@ -22,6 +22,9 @@
           <li>{{ service.name }} ({{ service.amount }})</li>
           }
         </ul>
+        <p class="requests-list__item-detail">
+          Сумма услуг: {{ request.summary | number : "1.2-2" }} рублей
+        </p>
       </div>
     </div>
     }

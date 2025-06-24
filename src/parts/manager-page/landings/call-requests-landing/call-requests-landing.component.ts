@@ -36,8 +36,12 @@ export class CallRequestsLandingComponent implements OnInit {
           );
         });
       },
-      error: (error) => {
-        this.notificationService.error(`Ошибка при получении заявок: ${error}`);
+      error: (err) => {
+        this.notificationService.error(
+          `Ошибка при получении заявок: ${
+            err?.error?.detail || 'Неизвестная ошибка'
+          }`
+        );
       },
     });
   }
@@ -58,7 +62,9 @@ export class CallRequestsLandingComponent implements OnInit {
         },
         error: (err) => {
           this.notificationService.error(
-            `Ошибка при обновлении заявки: ${err}`
+            `Ошибка при обновлении заявки: ${
+              err?.error?.detail || 'Неизвестная ошибка'
+            }`
           );
         },
       });

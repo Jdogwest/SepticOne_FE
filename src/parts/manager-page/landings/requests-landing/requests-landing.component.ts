@@ -51,7 +51,11 @@ export class RequestsLandingComponent implements OnInit {
         this.sortRequests(status);
       },
       error: (err) => {
-        this.notificationService.error(`Ошибка при получении заявок: ${err}`);
+        this.notificationService.error(
+          `Ошибка при получении заявок: ${
+            err?.error?.detail || 'Неизвестная ошибка'
+          }`
+        );
       },
     });
   }

@@ -71,7 +71,9 @@ export class UserEditComponent {
       },
       error: (err: any) => {
         this.notificationService.error(
-          `Ошибка при получении пользователя с id ${id}: ${err}`
+          `Ошибка при получении пользователя с id ${id}: ${
+            err?.error?.detail || 'Неизвестная ошибка'
+          }`
         );
       },
     });
@@ -121,7 +123,9 @@ export class UserEditComponent {
       },
       error: (err) => {
         this.notificationService.error(
-          `Ошибка при обновлении пользователя: ${err}`
+          `Ошибка при обновлении пользователя: ${
+            err?.error?.detail || 'Неизвестная ошибка'
+          }`
         );
       },
     });

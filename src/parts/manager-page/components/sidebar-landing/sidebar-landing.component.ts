@@ -34,7 +34,9 @@ export class SidebarLandingComponent {
       },
       error: (err) => {
         this.notificationService.error(
-          `Ошибка получения данных сессии: ${err}`
+          `Ошибка получения данных сессии: ${
+            err?.error?.detail || 'Неизвестная ошибка'
+          }`
         );
       },
     });
@@ -47,7 +49,9 @@ export class SidebarLandingComponent {
         this.router.navigate(['']);
       },
       error: (err) => {
-        this.notificationService.error(`Ошибка выхода: ${err}`);
+        this.notificationService.error(
+          `Ошибка выхода: ${err?.error?.detail || 'Неизвестная ошибка'}`
+        );
       },
     });
   }

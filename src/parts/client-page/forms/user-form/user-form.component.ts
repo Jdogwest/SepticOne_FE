@@ -39,7 +39,7 @@ export class UserFormComponent implements OnInit {
   ngOnInit() {
     this.userForm.disable();
     this.authService
-      .getSessionData()
+      .getSessionData(true)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (res) => {
@@ -56,7 +56,9 @@ export class UserFormComponent implements OnInit {
         },
         error: (err) => {
           this.notificationService.error(
-            `Ошибка при получении данных пользователя: ${err}`
+            `Ошибка при получении данных пользователя: ${
+              err?.error?.detail || 'Неизвестная ошибка'
+            }`
           );
         },
       });
@@ -95,10 +97,13 @@ export class UserFormComponent implements OnInit {
           );
           this.isEdit.set(false);
           this.disableEdit();
+          this.authService.refreshSession().subscribe();
         },
         error: (err) => {
           this.notificationService.error(
-            err?.error?.detail || JSON.stringify(err) || 'Ошибка редактирования'
+            `Ошибка редактирования: ${
+              err?.error?.detail || 'Неизвестная ошибка'
+            }`
           );
         },
       });

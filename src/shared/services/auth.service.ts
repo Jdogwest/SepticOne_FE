@@ -72,11 +72,13 @@ export class AuthService {
         },
       });
   }
-
-  getSessionData(): Observable<{ user: any; septic: any } | null> {
-    if (this.sessionData) {
+  getSessionData(
+    forceRefresh = false
+  ): Observable<{ user: any; septic: any } | null> {
+    if (this.sessionData && !forceRefresh) {
       return new BehaviorSubject(this.sessionData).asObservable();
     }
+
     return this.httpClient
       .get<{ user: any; septic: any }>(this.apiUrls.me, {
         withCredentials: true,
@@ -96,6 +98,19 @@ export class AuthService {
         tap(() => {
           this.isLoggedInSubject.next(false);
           this.sessionData = null;
+        })
+      );
+  }
+
+  refreshSession(): Observable<{ user: any; septic: any }> {
+    return this.httpClient
+      .get<{ user: any; septic: any }>(this.apiUrls.me, {
+        withCredentials: true,
+      })
+      .pipe(
+        tap((res) => {
+          this.sessionData = res;
+          this.isLoggedInSubject.next(true);
         })
       );
   }

@@ -101,8 +101,10 @@ export class RequestEditFormComponent {
   loadServices() {
     this.serviceService.getAllServices().subscribe({
       next: (res) => (this.services = res),
-      error: (error) =>
-        this.notificationService.error(`Ошибка загрузки услуг: ${error}`),
+      error: (err) =>
+        this.notificationService.error(
+          `Ошибка загрузки услуг: ${err?.error?.detail || 'Неизвестная ошибка'}`
+        ),
     });
   }
 
@@ -131,7 +133,9 @@ export class RequestEditFormComponent {
 
       let brigadesTemp = this.brigades();
 
-      brigadesTemp.push(res.brigadier);
+      if (res.brigadier) {
+        brigadesTemp.push(res.brigadier);
+      }
 
       this.brigades.set(brigadesTemp);
 
@@ -140,7 +144,7 @@ export class RequestEditFormComponent {
         status: res.status || 'none',
         date: dateValue,
         time: timeValue,
-        brigade: String(res.brigadier.id),
+        brigade: res.brigadier ? String(res.brigadier.id) : 'none',
         comment: res.comment || '',
         work_comment: res.work_comment || '',
         services: servicesFromRequest,
@@ -148,10 +152,6 @@ export class RequestEditFormComponent {
 
       this.handleDateChange(dateValue);
     });
-
-    this.requestForm.controls.date.valueChanges
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((date) => this.handleDateChange(date));
   }
 
   handleDateChange(date: Date | null) {
@@ -249,8 +249,12 @@ export class RequestEditFormComponent {
     };
     this.requestsService.editByIdRequest(id, payload).subscribe({
       next: () => this.notificationService.success('Заявка успешно обновлена'),
-      error: () =>
-        this.notificationService.error('Ошибка при обновлении заявки'),
+      error: (err) =>
+        this.notificationService.error(
+          `Ошибка при обновлении заявки: ${
+            err?.error?.detail || 'Неизвестная ошибка'
+          }`
+        ),
     });
   }
 }

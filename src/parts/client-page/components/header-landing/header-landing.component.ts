@@ -47,7 +47,9 @@ export class HeaderLandingComponent implements OnInit {
         this.notificationService.success('Выход выполнен успешно');
       },
       error: (err) => {
-        this.notificationService.error(`Ошибка выхода: ${err}`);
+        this.notificationService.error(
+          `Ошибка выхода: ${err?.error?.detail || 'Неизвестная ошибка'}`
+        );
       },
     });
   }

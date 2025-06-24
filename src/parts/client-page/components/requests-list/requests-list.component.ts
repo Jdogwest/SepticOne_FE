@@ -1,9 +1,10 @@
 import { MyRequest } from '@/shared/interfaces/my-request.interface';
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-requests-list',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './requests-list.component.html',
   styleUrl: './requests-list.component.scss',
 })
