@@ -37,11 +37,9 @@ export class ContactFormComponent {
         next: (response: { detail?: string }) => {
           this.notificationService.success('Данные отправлены');
         },
-        error: (err: { detail?: string }) => {
+        error: (error: { detail?: string }) => {
           this.notificationService.error(
-            `Ошибка при отправке данных: ${
-              err?.error?.detail || 'Неизвестная ошибка'
-            }`
+            `Ошибка при отправке данных: ${error}`
           );
         },
       });
