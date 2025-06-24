@@ -42,7 +42,64 @@ export class CalendarComponent implements OnInit {
     this.loadBrigadsSchedule();
   }
 
+  loadBrigadsSchedule() {
+    console.log('Загрузка расписания бригад...');
+
+    this.brigadeService.getBrigadeBusyDate().subscribe({
+      next: (busyDatesResponse) => {
+        console.log('Получены занятые даты от сервера:', busyDatesResponse);
+
+        const busyDatesMap = new Map<
+          string,
+          BusyDateResponse['busy_brigadiers']
+        >();
+
+        busyDatesResponse.forEach((entry) => {
+          busyDatesMap.set(entry.date, entry.busy_brigadiers);
+        });
+
+        this.calendarDays.forEach((week, weekIndex) => {
+          week.forEach((day, dayIndex) => {
+            if (day.date) {
+              const isoDate = day.date.toISOString().slice(0, 10);
+              const brigadiers = busyDatesMap.get(isoDate);
+              console.log(
+                `Проверка даты ${isoDate}: ${
+                  brigadiers ? 'занята' : 'свободна'
+                }`
+              );
+              if (brigadiers) {
+                day.busy = true;
+                day.brigadsStatus = brigadiers.map((b) => ({
+                  request_id: b.request_id,
+                  brigadId: b.id,
+                  brigadSurname: b.surname,
+                  brigadName: b.name,
+                  brigadPatronymic: b.patronymic,
+                  busyTimes: [],
+                }));
+                console.log(`Бригады на ${isoDate}:`, day.brigadsStatus);
+              } else {
+                day.busy = false;
+                day.brigadsStatus = [];
+              }
+            }
+          });
+        });
+
+        console.log('Календарь после обработки:', this.calendarDays);
+      },
+      error: (err) => {
+        console.error(
+          'Ошибка при загрузке занятых дат:',
+          err?.error?.detail || err
+        );
+      },
+    });
+  }
+
   generateCalendar(year: number, month: number) {
+    console.log(`Генерация календаря на ${month + 1}.${year}`);
     const firstDay = new Date(year, month, 1);
     const lastDay = new Date(year, month + 1, 0);
     const firstWeekday = firstDay.getDay() || 7;
@@ -56,7 +113,8 @@ export class CalendarComponent implements OnInit {
     }
 
     for (let day = 1; day <= daysInMonth; day++) {
-      currentWeek.push({ date: new Date(year, month, day) });
+      const date = new Date(year, month, day);
+      currentWeek.push({ date });
       if (currentWeek.length === 7) {
         weeks.push(currentWeek);
         currentWeek = [];
@@ -71,51 +129,6 @@ export class CalendarComponent implements OnInit {
     }
 
     this.calendarDays = weeks;
-  }
-
-  loadBrigadsSchedule() {
-    this.brigadeService.getBrigadeBusyDate().subscribe({
-      next: (busyDatesResponse) => {
-        const busyDatesMap = new Map<
-          string,
-          BusyDateResponse['busy_brigadiers']
-        >();
-
-        busyDatesResponse.forEach((entry) => {
-          busyDatesMap.set(entry.date, entry.busy_brigadiers);
-        });
-
-        this.calendarDays.forEach((week) => {
-          week.forEach((day) => {
-            if (day.date) {
-              const isoDate = day.date.toISOString().slice(0, 10);
-              const brigadiers = busyDatesMap.get(isoDate);
-              if (brigadiers) {
-                day.busy = true;
-                day.brigadsStatus = brigadiers.map((b) => ({
-                  request_id: b.request_id,
-                  brigadId: b.id,
-                  brigadSurname: b.surname,
-                  brigadName: b.name,
-                  brigadPatronymic: b.patronymic,
-                  busyTimes: [],
-                }));
-              } else {
-                day.busy = false;
-                day.brigadsStatus = [];
-              }
-            }
-          });
-        });
-      },
-      error: (err) => {
-        // this.notificationService.error(
-        //   `Ошибка загрузки занятых дат: ${
-        //     err?.error?.detail || 'Неизвестная ошибка'
-        //   }`
-        // );
-        console.error(err);
-      },
-    });
+    console.log('Сгенерированные дни календаря:', this.calendarDays);
   }
 }
