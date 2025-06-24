@@ -192,11 +192,11 @@ export class ServicesFormComponent {
           this.notificationService.success('Заявка успешно создана');
         },
         error: (err) => {
-          // this.notificationService.error(
-          //   `Ошибка создания заявки: ${
-          //     err?.error?.detail || 'Неизвестная ошибка'
-          //   }`
-          // );
+          this.notificationService.error(
+            `Ошибка создания заявки: ${
+              err?.error?.detail || 'Неизвестная ошибка'
+            }`
+          );
           console.error(err);
         },
       });
